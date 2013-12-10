@@ -20,7 +20,7 @@ package "vim-nox" do
   action :install
 end
 
-package "ctags" do
+package "exuberant-ctags" do
   action :install
 end
 
