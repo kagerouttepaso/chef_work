@@ -7,8 +7,44 @@
 # All rights reserved - Do Not Redistribute
 #
 
-%w {tree }.each do |pkg|
-  package pkg do
-    action :install
-  end
+
+package "tmux" do
+  action :install
 end
+
+package "zsh" do
+  action :install
+end
+
+package "vim-nox" do
+  action :install
+end
+
+package "ctags" do
+  action :install
+end
+
+package "tree" do
+  action :install
+end
+
+package "ruby2.0" do
+  action :install
+end
+
+package "ruby2.0-dev" do
+  action :install
+end
+
+package "git" do
+  action :install
+end
+
+package "git-svn" do
+  action :install
+end
+
+package "subversion" do
+  action :install
+end
+
