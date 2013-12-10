@@ -48,3 +48,6 @@ package "subversion" do
   action :install
 end
 
+package "xubuntu-desktop" do
+  action :install
+end
