@@ -27,12 +27,40 @@ vim ./nodes/localhost.json
 ##実行
 ###ローカル環境への適応方法
 
+chef-solo使った方法
+
 ``` bash:bash
 sudo chef-solo -c ./solo.rb -j ./nodes/localhost.json
 ```
 
-###Knife-solo使ったインストール
+Knife-solo使ったインストール
 
 ```bash:bash
 knife solo cook localhost
+```
+
+##ネットワークこしにChefる
+###前提条件
+
+- 対象PCへsshログインができること
+- knife-solo中にめちゃめちゃパスワードを聞かれるので、SSHログインは公開鍵認証ができるようになっているとなお良い
+
+###手順
+
+1, 対象へ chefをインストールする
+
+```bash:bash
+knife solo prepare <hostname>
+```
+
+2, Jsonファイルを編集する
+
+```bash:bash
+vim ./nodes/<hostname>.json
+```
+
+3, chefを起動する
+
+```bash:bash
+knife solo cook <hostname>
 ```
