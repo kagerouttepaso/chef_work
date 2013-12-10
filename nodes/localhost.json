@@ -1,3 +1,6 @@
 {
-  "run_list" : [ "recipe[base]" ]
+  "run_list" : [
+    "recipe[base]",
+    "recipe[svp551]"
+      ]
 }

@@ -23,9 +23,16 @@ knife cookbook create base -o site-cookbooks/
 vim ./solo.rb
 vim ./nodes/localhost.json
 ```
-
-##ローカル環境への適応方法
+----------------------
+##実行
+###ローカル環境への適応方法
 
 ``` bash:bash
 sudo chef-solo -c ./solo.rb -j ./nodes/localhost.json
+```
+
+###Knife-solo使ったインストール
+
+```bash:bash
+knife solo cook localhost
 ```
