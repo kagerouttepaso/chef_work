@@ -28,6 +28,10 @@ package "tree" do
   action :install
 end
 
+package "aptitude" do
+  action :install
+end
+
 package "ruby2.0" do
   action :install
 end
@@ -40,13 +44,14 @@ package "git" do
   action :install
 end
 
+package "subversion" do
+  action :install
+end
+
 package "git-svn" do
   action :install
 end
 
-package "subversion" do
-  action :install
-end
 
 package "xubuntu-desktop" do
   action :install
