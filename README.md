@@ -6,6 +6,19 @@ chefの使い方
 
 ##環境のインストール
 
+簡単版
+```bash:bash
+#なにはなくともRuby
+sudo apt-get install ruby2.0 git
+#Kinife-soloに必要っぽい
+sudo gem i bundler
+#Bundleでchefとかもろもろ落としてきて
+#サードパーティー製のクックブック落としてきて
+#Localhostへknife solo cook !!!
+./install.sh
+```
+
+真面目版
 ```bash:bash
 #なにはなくともRuby
 sudo apt-get install ruby2.0
@@ -27,11 +40,11 @@ sudo gem i berkshelf
 
 ```bash:bash
 #レポジトリを作る。
-knife solo init chef-repo
+bundle exec knife solo init chef-repo
 cd chef-repo
 
 #Recipeを作る
-knife cookbook create base -o site-cookbooks/
+bundle exec knife cookbook create base -o site-cookbooks/
 
 #chef-solo用ファイルを作る (knife-soloには必要ない)
 vim ./solo.rb
@@ -46,13 +59,13 @@ vim ./nodes/localhost.json
 ####chef-solo使った方法
 
 ``` bash:bash
-sudo chef-solo -c ./solo.rb -j ./nodes/localhost.json
+sudo bundle exec chef-solo -c ./solo.rb -j ./nodes/localhost.json
 ```
 
 ####Knife-solo使ったインストール
 
 ```bash:bash
-knife solo cook localhost
+bundle exec knife solo cook localhost
 ```
 
 ###ネットワークこしにChefる
@@ -66,7 +79,7 @@ knife solo cook localhost
 1, 対象へ chefをインストールする
 
 ```bash:bash
-knife solo prepare <hostname>
+bundle exec knife solo prepare <hostname>
 ```
 
 2, Jsonファイルを編集する
@@ -78,5 +91,5 @@ vim ./nodes/<hostname>.json
 3, chefを起動する
 
 ```bash:bash
-knife solo cook <hostname>
+bundle exec knife solo cook <hostname>
 ```
