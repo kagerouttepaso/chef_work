@@ -1,0 +1,2 @@
+default[:dotfiles][:repo] = "master"
+
