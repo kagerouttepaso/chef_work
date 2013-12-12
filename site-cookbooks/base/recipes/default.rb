@@ -13,3 +13,16 @@
   end
 end
 
+git '/home/'+node[:current_user]+'/dotfiles' do
+  action :sync
+  repository 'https://github.com/kagerouttepaso/dotfiles.git'
+  notifies :run, 'bash[after_sync]'
+end
+
+bash 'after_sync'do
+  action :nothing
+  flags '-x'
+  code <<-__EOL__
+  echo hello
+  __EOL__
+end
