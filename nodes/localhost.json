@@ -1,9 +1,5 @@
 {
-  "dotfiles" : {
-    "repo" : "sanritz"
-  },
   "run_list" : [
     "recipe[base]",
-    "recipe[svp551]"
       ]
 }

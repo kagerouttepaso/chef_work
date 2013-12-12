@@ -1,1 +1,1 @@
-{  "run_list" : [    "recipe[base]",    "recipe[svp551]"      ]}
+{  "dotfiles" : {    "repo" : "sanritz"  },  "run_list" : [    "recipe[base]",    "recipe[svp551]"      ]}

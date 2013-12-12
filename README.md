@@ -6,34 +6,11 @@ chefの使い方
 
 ##環境のインストール
 
-簡単版
 ```bash:bash
-#なにはなくともRuby
-sudo apt-get install ruby2.0 git
-#Kinife-soloに必要っぽい
-sudo gem i bundler
-#Bundleでchefとかもろもろ落としてきて
-#サードパーティー製のクックブック落としてきて
-#Localhostへknife solo cook !!!
+#もしお仕事なら
+./install.sh oshigoto
+#プライベートユース
 ./install.sh
-```
-
-真面目版
-```bash:bash
-#なにはなくともRuby
-sudo apt-get install ruby2.0
-#Kinife-soloに必要っぽい
-sudo apt-get install ruby2.0-dev
-#gemでもインストールできるらしいけど、今回はaptをつかう
-sudo apt-get install  chef
-#knife-soloは必須です
-sudo gem install knife-solo
-#初回のみコンフィグを行う。
-#いろいろ聞かれるけど全部yで問題なし
-knife configure
-
-#サードパーティー製のRecipeを使うならこれもインストールしておく
-sudo gem i berkshelf
 ```
 
 ##repositoryの作り方
