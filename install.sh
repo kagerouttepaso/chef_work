@@ -13,7 +13,7 @@ if [ ! -f "installed.lock" ]; then
     sudo gem2.0 i bundler --no-ri --no-rdoc
 fi
 
-bundle install --path=bundle
+bundle install --path=.bundle
 bundle exec berks --path=cookbooks
 
 #install chef
