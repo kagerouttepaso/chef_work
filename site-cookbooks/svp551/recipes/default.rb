@@ -9,7 +9,7 @@
 #
 
 package "gcc-4.8-powerpc-linux-gnu" do
-  action :install
+  action :upgrade
 end
 
 link "/usr/bin/powerpc-linux-gnu-gcc" do
