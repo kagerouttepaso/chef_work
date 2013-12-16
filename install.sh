@@ -9,7 +9,7 @@ fi
 
 #install package
 if [ ! -f "installed.lock" ]; then
-    sudo apt-get install ruby ruby2.0 ruby2.0-dev
+    sudo apt-get install ruby ruby2.0 ruby2.0-dev openssh-server
     sudo gem2.0 i bundler --no-ri --no-rdoc
 fi
 
@@ -19,9 +19,8 @@ bundle exec berks --path=cookbooks
 #install chef
 if [ ! -f "installed.lock" ]; then
     bundle exec knife solo prepare localhost
-    knife configre
     touch installed.lock
 fi
 
 #cook
-sudo chef-solo -c ./solo.rb -j ./nodes/${HostName}.json
+bundle exec knife solo cook ${HostName}
