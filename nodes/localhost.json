@@ -2,6 +2,7 @@
   "run_list" : [
     //enable LWRP
     "recipe[user]",             //to run serverbase
+    "recipe[user::data_bag]",             //to run serverbase
     "recipe[simple_iptables]",  //to run serverbase
     //cook recipes
     "recipe[base]",
@@ -25,5 +26,6 @@
         "permit_root_login":"no",
         "password_authentication":"yes"
       }
-    }
+    },
+    "users": "kitsunai"
 }
