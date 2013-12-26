@@ -1,5 +1,7 @@
 {
   "run_list" : [
-    "recipe[base]"
-      ]
+    "recipe[user]",
+    "recipe[base]",
+    "recipe[serverbase]"
+    ]
 }

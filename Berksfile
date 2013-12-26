@@ -1,3 +1,6 @@
 site :opscode
 
-cookbook 'apt'
+cookbook 'nginx'
+cookbook 'mysql'
+cookbook 'user'
+cookbook 'openssh'
