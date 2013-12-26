@@ -1,7 +1,20 @@
 {
   "run_list" : [
+    //enable LWRP
     "recipe[user]",
+    //cook recipes
     "recipe[base]",
-    "recipe[serverbase]"
-    ]
+    "recipe[serverbase]",
+    "recipe[sudo]"
+    ],
+    "authorization": {
+      //sudo setting
+      "sudo" : {
+        //enable users
+        "groups"       : ["admin", "wheel", "sysadmin"],
+        "users"        : ["kitsunai"],
+        //enable nopasswd
+        "passwordless" : "true"
+      }
+    }
 }
