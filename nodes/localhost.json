@@ -1,20 +1,29 @@
 {
   "run_list" : [
     //enable LWRP
-    "recipe[user]",
+    "recipe[user]",             //to run serverbase
+    "recipe[simple_iptables]",  //to run serverbase
     //cook recipes
     "recipe[base]",
     "recipe[serverbase]",
-    "recipe[sudo]"
+    "recipe[sudo]",
+    "recipe[openssh]"
     ],
+    //sudo setting
     "authorization": {
-      //sudo setting
       "sudo" : {
         //enable users
         "groups"       : ["admin", "wheel", "sysadmin"],
         "users"        : ["kitsunai"],
         //enable nopasswd
         "passwordless" : "true"
+      }
+    },
+    //openssh setting
+    "opensh": {
+      "server": {
+        "permit_root_login":"no",
+        "password_authentication":"yes"
       }
     }
 }
