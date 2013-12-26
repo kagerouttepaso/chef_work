@@ -7,11 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-#to enabele password of user_account
-gem_package "ruby-shadow" do
-  action :upgrade
-end
-
 ##iptable
 ## Exampleをコピりました
 ## Reject packets other than those explicitly allowed
