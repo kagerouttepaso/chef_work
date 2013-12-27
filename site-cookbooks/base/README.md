@@ -1,53 +1,31 @@
 base Cookbook
 =============
-TODO: Enter the cookbook description here.
+this cookbook is base setting of my pc
 
-e.g.
-This cookbook makes your favorite breakfast sandwich.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - base needs toaster to brown your bagel.
+requirements is notthing
 
 Attributes
 ----------
-TODO: List you cookbook attributes here.
+ cookbook attributes here.
 
-e.g.
 #### base::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['base']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+key                        | type   | values          | default | description
+:-                         | :-     | :-              | :-      | :-
+`node['dotfiles']['repo']` | string | master, sanritz | master  | repository of dotfiles
 
 Usage
 -----
 #### base::default
-TODO: Write usage instructions for each cookbook.
-
-e.g.
-Just include `base` in your node's `run_list`:
+e.g1
 
 ```json
 {
-  "name":"my_node",
-  "run_list": [
-    "recipe[base]"
-  ]
+    "dotfiles" :{
+      "repo" : "sanritz"
+    }
 }
 ```
 

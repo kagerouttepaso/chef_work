@@ -1,0 +1,12 @@
+{
+  "id"         : "kitsunai",
+  "comment"    : "Kitsunai Daisuke",
+  "shell"      : "/bin/bash",
+  "ssh_keygen" : "false",
+  "action"     : "create",
+
+  "password"   : "$6$kitsunai$kzKmt9.wC7b4kqG1SDBqJil8hxpd5RyjaXnWwvZ95QVOqDpXjyrbv.DOBPRijN835kagsQXLOxTsLrtnEJIii.",
+  "ssh_keys"   : [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCklYsTPT4/J4a3hXEkrLkzLYwxC24sPuxI0A3idScXn6r5ZgwUwPLN5CQG6YVEIIKVrnRKIuubTB3o1XVDeOUwAegVGwiyfHw50Wx1WVyxBkdBA7JHqxJ7nsRgQfPUZmOQP5zZtXBNHXhTpaTM21j/FAwm215o6tIqo9aRxjw/3wsJzPUHhQzLR/DyOf82m6T5eY/3fYKUTNtycth8LjfNRq2TX32FHZrfyoVpcMNUIcapgofKIKcjMEEbo6Y09zV+S6rFywfcpFAzc0flRZ08Zi416i0JTRwg2vAje6ARbnZrpvIB/sOiQR7jFDMtcMaWFXrLeFeFxfinlTZnaE8D kitsunai@ckitsunai"
+    ]
+}
