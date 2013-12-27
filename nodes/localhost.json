@@ -1,46 +1,40 @@
 {
-  //runlist
   "run_list" : [
-    //enable iptables
-    "recipe[simple_iptables]",  //to run serverbase
-    "recipe[iptables_base]",    //to run serverbase
-    //setup users
-    "recipe[user_base]",        //to run passowrd command in recipe of user
+    "recipe[simple_iptables]",
+    "recipe[iptables_base]",
+
+    "recipe[user_base]",
     "recipe[user]",
     "recipe[user::data_bag]",
-    //cook recipes
+
     "recipe[sudo]",
     "recipe[openssh]",
-    "recipe[base]"
+    "recipe[base]",
+    "recipe[nginx]"
     ],
 
-    //sudo setting
-    //readme file :  ./cookbooks/sudo/README.md
-    "authorization": {
+    "_comment_sudo_setting" : [ "readme file :  ./cookbooks/sudo/README.md"],
+    "authorization" : {
       "sudo" : {
-        //enable users
         "groups"       : ["admin", "wheel", "sysadmin"],
         "users"        : ["kitsunai"],
-        //enable nopasswd
         "passwordless" : "true"
       }
     },
 
-    //openssh setting
-    //readme file : ./cookbooks/openssh/README.md
-    "opensh": {
-      "server": {
-        "permit_root_login":"no",
-        "password_authentication":"yes"
+    "_comment_openssh_setting" : [ "readme file : ./cookbooks/openssh/README.md"],
+    "opensh" : {
+      "server" : {
+        "permit_root_login"       : "no",
+        "password_authentication" : "yes"
       }
     },
 
-    //users setting
-    //readme file : ./cookbooks/user/README.md
+    "_comment_users_setting" : [ "readme file : ./cookbooks/user/README.md" ],
     "users": "kitsunai",
 
-    // ./site-cookbooks/base/README.md
-    "dotfiles" :{
+    "_comment_base_setting" : [ "readme file : ./site-cookbooks/base/README.md"],
+    "dotfiles" : {
       "repo" : "master"
     }
 }

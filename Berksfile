@@ -1,6 +1,6 @@
 site :opscode
 
-#cookbook 'nginx'
+cookbook 'nginx'
 #cookbook 'mysql'
 
 #account setting
