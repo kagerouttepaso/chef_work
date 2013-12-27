@@ -13,7 +13,7 @@ Attributes
 
 #### base::default
 key                        | type   | values          | default | description
-:-                         | :-     | :-              | :-      | :-
+:--                        |:--     |:--              |:--      |:--
 `node['dotfiles']['repo']` | string | master, sanritz | master  | repository of dotfiles
 
 Usage
