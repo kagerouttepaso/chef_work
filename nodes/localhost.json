@@ -1,18 +1,21 @@
 {
+  //runlist
   "run_list" : [
-    //enable LWRP
+    //enable iptables
     "recipe[simple_iptables]",  //to run serverbase
-    //add users
-    "recipe[user_base]",        //to run passowrd command  in user
+    "recipe[iptables_base]",    //to run serverbase
+    //setup users
+    "recipe[user_base]",        //to run passowrd command in recipe of user
     "recipe[user]",
     "recipe[user::data_bag]",
     //cook recipes
-    "recipe[base]",
-    "recipe[serverbase]",
     "recipe[sudo]",
-    "recipe[openssh]"
+    "recipe[openssh]",
+    "recipe[base]"
     ],
+
     //sudo setting
+    //readme file :  ./cookbooks/sudo/README.md
     "authorization": {
       "sudo" : {
         //enable users
@@ -22,13 +25,22 @@
         "passwordless" : "true"
       }
     },
+
     //openssh setting
+    //readme file : ./cookbooks/openssh/README.md
     "opensh": {
       "server": {
         "permit_root_login":"no",
         "password_authentication":"yes"
       }
     },
-    //users
-    "users": "kitsunai"
+
+    //users setting
+    //readme file : ./cookbooks/user/README.md
+    "users": "kitsunai",
+
+    // ./site-cookbooks/base/README.md
+    "dotfiles" :{
+      "repo" : "master"
+    }
 }

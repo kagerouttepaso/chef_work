@@ -1,11 +1,11 @@
-serverbase CHANGELOG
-====================
+iptables_base CHANGELOG
+=======================
 
-This file is used to list changes made in each version of the serverbase cookbook.
+This file is used to list changes made in each version of the iptables_base cookbook.
 
 0.1.0
 -----
-- [your_name] - Initial release of serverbase
+- [your_name] - Initial release of iptables_base
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

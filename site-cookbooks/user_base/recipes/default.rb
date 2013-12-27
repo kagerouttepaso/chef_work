@@ -7,6 +7,11 @@
 # All rights reserved - Do Not Redistribute
 #
 
+#enable ruby
+package "ruby" do
+  action :install
+end
+
 #to enabele password of user_account
 gem_package "ruby-shadow" do
   action :upgrade

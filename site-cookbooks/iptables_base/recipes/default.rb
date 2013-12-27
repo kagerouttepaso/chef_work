@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: serverbase
+# Cookbook Name:: iptables_base
 # Recipe:: default
 #
 # Copyright 2013, YOUR_COMPANY_NAME
@@ -7,9 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
-##iptable
-## Exampleをコピりました
-## Reject packets other than those explicitly allowed
+# Exampleをコピりました
+
+# Reject packets other than those explicitly allowed
 simple_iptables_policy "INPUT" do
   policy "DROP"
 end
