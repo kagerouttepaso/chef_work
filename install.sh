@@ -9,8 +9,8 @@ fi
 
 #install package
 if [ ! -f "installed.lock" ]; then
-    sudo apt-get install ruby ruby2.0 ruby2.0-dev openssh-server
-    sudo gem2.0 i bundler --no-ri --no-rdoc
+    sudo apt-get install ruby ruby-dev openssh-server
+    sudo gem i bundler --no-ri --no-rdoc
 fi
 
 bundle install --path=.bundle
