@@ -68,7 +68,7 @@
     "users": "kitsunai",
 
     "_comment_base_setting" : [ "readme file : ./site-cookbooks/base/README.md"],
-    "dotfiles" : {
-      "repo" : "master"
+    "base" : {
+      "dotfilesrepo" : "master"
     }
 }

@@ -16,7 +16,7 @@ end
 repo = '/home/'+node[:current_user]+'/dotfiles'
 git repo do
   user node[:current_user]
-  reference node[:dotfiles][:repo]
+  reference node[:base][:dotfilesrepo]
   repository 'https://github.com/kagerouttepaso/dotfiles.git'
   action :sync
   notifies :run, 'bash[after_sync]'

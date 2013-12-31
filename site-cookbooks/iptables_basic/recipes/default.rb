@@ -33,7 +33,7 @@ end
 
 # Allow SSH
 simple_iptables_rule "ssh" do
-  rule "--proto tcp --dport 22"
+  rule "--proto tcp --dport " + node[:iptables_basic][:sshport]
   jump "ACCEPT"
 end
 

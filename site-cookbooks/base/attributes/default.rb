@@ -1,2 +1,2 @@
-default[:dotfiles][:repo] = "master"
+default[:base][:dotfilesrepo] = "master"
 
