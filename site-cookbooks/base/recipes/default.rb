@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-%w{tmux zsh vim-nox exuberant-ctags tree aptitude ruby ruby2.0 ruby2.0-dev git subversion git-svn tig paco}.each do |pkg|
+%w{tmux zsh vim-nox exuberant-ctags tree aptitude ruby ruby-dev rubygems gem git subversion git-svn tig paco}.each do |pkg|
   package pkg do
     action :upgrade
   end
