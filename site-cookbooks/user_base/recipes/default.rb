@@ -8,7 +8,7 @@
 #
 
 #enable ruby
-package "ruby ruby-dev gem" do
+package "ruby1.9.3 ruby-dev gem rubygems" do
   action :install
 end
 
