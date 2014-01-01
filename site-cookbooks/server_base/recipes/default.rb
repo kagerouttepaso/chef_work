@@ -22,6 +22,25 @@ template "/etc/logwatch/conf/logwatch.conf" do
   })
 end
 
+#nginx
+template "/usr/share/nginx/www/index.php" do
+  source "index.php.erb"
+  mode 0644
+  owner "root"
+  group "root"
+end
+
+template "/etc/nginx/sites-available/phptest" do
+  source "phptest.erb"
+  mode 0644
+  owner "root"
+  group "root"
+end
+
+nginx_site "phptest" do
+  enable true
+end
+
 #wordpress
 #%w{tar wget php5 php5-fpm php5-mysql phpmyadmin}.each do |pkg|
 #  package pkg do
