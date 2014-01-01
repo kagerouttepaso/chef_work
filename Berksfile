@@ -1,7 +1,7 @@
 site :opscode
 
 cookbook 'nginx'
-#cookbook 'mysql'
+cookbook 'mysql'
 
 #account setting
 cookbook 'user'

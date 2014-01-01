@@ -9,9 +9,8 @@
 
     "recipe[sudo]",
     "recipe[openssh]",
-    "recipe[base]",
-    "recipe[nginx]"
-    ],
+    "recipe[base]"
+      ],
 
     "_comment_sudo_setting" : [ "readme file :  ./cookbooks/sudo/README.md"],
     "authorization" : {
@@ -26,8 +25,8 @@
     "openssh" : {
       "client" : {
         "*" : {
-          "send_env"                    : "LANG LC_*",
-          "hash_known_hosts"            : "yes",
+          "send_env"                         : "LANG LC_*",
+          "hash_known_hosts"                 : "yes",
           "g_s_s_a_p_i_authentication"       : "yes",
           "g_s_s_a_p_i_delegate_credentials" : "no"
         }
@@ -49,7 +48,7 @@
         "pubkey_authentication"             : "yes",
         "ignore_rhosts"                     : "yes",
         "rhosts_r_s_a_authentication"       : "no",
-        "hostbased_authentication"         : "no",
+        "hostbased_authentication"          : "no",
         "permit_empty_passwords"            : "no",
         "challenge_response_authentication" : "no",
         "x11_forwarding"                    : "yes",
@@ -65,7 +64,7 @@
     },
 
     "_comment_users_setting" : [ "readme file : ./cookbooks/user/README.md" ],
-    "users": "kitsunai",
+    "users": ["kitsunai"],
 
     "_comment_base_setting" : [ "readme file : ./site-cookbooks/base/README.md"],
     "base" : {
