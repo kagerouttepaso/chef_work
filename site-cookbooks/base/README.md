@@ -9,12 +9,12 @@ requirements is notthing
 
 Attributes
 ----------
- cookbook attributes here.
+cookbook attributes here.
 
 #### base::default
-key                        | type   | values          | default | description
-:--                        |:--     |:--              |:--      |:--
-`node['dotfiles']['repo']` | string | master, sanritz | master  | repository of dotfiles
+key                              | type   | values            | default | description
+:--                              |:--     |:--                |:--      |:--
+`node['server_base']['mail_to']` | string | your mail address | root    | logwatch send mail address
 
 Usage
 -----
@@ -23,9 +23,10 @@ e.g1
 
 ```json
 {
-    "dotfiles" :{
-      "repo" : "sanritz"
-    }
+  "runlist" : [ "recipe[base]" ],
+  "server_base" :{
+    "mail_to" : "example@mail.com"
+  }
 }
 ```
 

@@ -1,53 +1,35 @@
 server_base Cookbook
 ====================
-TODO: Enter the cookbook description here.
+this cookbook is base setting of my vps
 
-e.g.
-This cookbook makes your favorite breakfast sandwich.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
+requirements is notthing
 
-e.g.
-#### packages
-- `toaster` - server_base needs toaster to brown your bagel.
 
 Attributes
 ----------
-TODO: List you cookbook attributes here.
+cookbook attributes here.
 
-e.g.
-#### server_base::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['server_base']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+
+#### base::default
+key                            | type   | values          | default | description
+:--                            |:--     |:--              |:--      |:--
+`node['base']['dotfilesrepo']` | string | master, sanritz | master  | repository of dotfiles
+
 
 Usage
 -----
-#### server_base::default
-TODO: Write usage instructions for each cookbook.
-
-e.g.
-Just include `server_base` in your node's `run_list`:
+#### base::default
+e.g1
 
 ```json
 {
-  "name":"my_node",
-  "run_list": [
-    "recipe[server_base]"
-  ]
+  "runlist" : [ "recipe[server_base]" ],
+  "base" :{
+    "dotfilesrepo" : "sanritz"
+  }
 }
 ```
 

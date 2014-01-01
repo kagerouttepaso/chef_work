@@ -10,3 +10,6 @@ cookbook 'user'
 cookbook 'sudo'
 cookbook 'openssh'
 cookbook 'simple_iptables'
+
+cookbook 'php'
+cookbook 'php-fpm'
