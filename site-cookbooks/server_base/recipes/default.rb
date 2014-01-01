@@ -8,8 +8,27 @@
 #
 
 #logwatch
+directory "/var/cache/logwatch" do
+  owner "root"
+  group "root"
+  mode 0644
+  action :create
+end
+
 package "logwatch" do
   action :upgrade
+  notifies :run, "execute[copy_logwatch_services]"
+end
+
+execute "copy_logwatch_services" do
+  command <<-EOH
+  rm -rf ./*
+  cp /usr/share/logwatch/default.conf/services/* .
+  logwatch
+  EOH
+  cwd "/etc/logwatch/conf/services"
+  user "root"
+  action :nothing
 end
 
 template "/etc/logwatch/conf/logwatch.conf" do
