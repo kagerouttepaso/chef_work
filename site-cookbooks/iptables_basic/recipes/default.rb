@@ -27,7 +27,8 @@ end
 # Allow any established connections to continue,  even
 # if they would be in violation of other rules.
 simple_iptables_rule "system" do
-  rule "-m conntrack --ctstate ESTABLISHED,RELATED"
+  rule [ "-m conntrack --ctstate ESTABLISHED,RELATED",
+         "-m state --state ESTABLISHED,RELATED" ]
   jump "ACCEPT"
 end
 

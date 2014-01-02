@@ -7,6 +7,12 @@
 # All rights reserved - Do Not Redistribute
 #
 
+#mosh
+simple_iptables_rule "mosh" do
+  rule "--proto udp --dport 60000:61000"
+  jump "ACCEPT"
+end
+
 #logwatch
 directory "/var/cache/logwatch" do
   owner "root"
