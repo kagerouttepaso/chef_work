@@ -63,8 +63,58 @@ template "/etc/nginx/sites-available/phptest" do
 end
 
 nginx_site "phptest" do
-  enable true
+#  enable true
+  enable false
 end
+
+#owncloud
+#mysql_connection_info = {
+#  :host => "localhost",
+#  :username => "root",
+#  :password => node["mysql"]["server_root_password"]
+#}
+#
+#mysql_database "owncloud" do
+#  connection mysql_connection_info
+#  action :create
+#end
+#
+#mysql_database_user "owncloud" do
+#  connection mysql_connection_info
+#  database_name "owncloud"
+#  host "localhost"
+#  password "owncloud"
+#  privileges [:all]
+#  action :grant
+#end
+#
+#%w{/var/www /var/www/html}.each do |dir|
+#  directory dir do
+#    owner "www-data"
+#    group "www-data"
+#    mode 0644
+#    action :create
+#  end
+#end
+#
+#remote_file "/var/www/html/owncloud-6.0.0a.tar.bz2" do
+#  source "http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2"
+#  action :create_if_missing
+#  owner "www-data"
+#  group "www-data"
+#  mode 0644
+#  notifies :run, "execute[extract_owncloud]", :immediately
+#end
+#
+#execute "extract_owncloud" do
+#  command <<-EOH
+#  tar -xjf owncloud-6.0.0a.tar.bz2
+#  chown -R www-data:www-data owncloud
+#  EOH
+#  cwd "/var/www/html"
+#  user "root"
+#  action :nothing
+#end
 
 #wordpress
 #%w{tar wget php5 php5-fpm php5-mysql phpmyadmin}.each do |pkg|

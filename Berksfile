@@ -2,6 +2,7 @@ site :opscode
 
 cookbook 'nginx'
 cookbook 'mysql'
+cookbook 'database'
 
 #account setting
 cookbook 'user'
@@ -13,3 +14,5 @@ cookbook 'simple_iptables'
 
 cookbook 'php'
 cookbook 'php-fpm'
+
+cookbook 'owncloud'
