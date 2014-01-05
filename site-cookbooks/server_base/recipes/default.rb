@@ -7,12 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-#mosh
-simple_iptables_rule "mosh" do
-  rule "--proto udp --dport 60000:61000"
-  jump "ACCEPT"
-end
-
 #logwatch
 directory "/var/cache/logwatch" do
   owner "root"
@@ -30,7 +24,6 @@ execute "copy_logwatch_services" do
   command <<-EOH
   rm -rf ./*
   cp /usr/share/logwatch/default.conf/services/* .
-  logwatch
   EOH
   cwd "/etc/logwatch/conf/services"
   user "root"
@@ -64,57 +57,70 @@ end
 
 nginx_site "phptest" do
 #  enable true
-  enable false
+  enable true
 end
 
 #owncloud
-#mysql_connection_info = {
-#  :host => "localhost",
-#  :username => "root",
-#  :password => node["mysql"]["server_root_password"]
-#}
-#
-#mysql_database "owncloud" do
-#  connection mysql_connection_info
-#  action :create
-#end
-#
-#mysql_database_user "owncloud" do
-#  connection mysql_connection_info
-#  database_name "owncloud"
-#  host "localhost"
-#  password "owncloud"
-#  privileges [:all]
-#  action :grant
-#end
-#
-#%w{/var/www /var/www/html}.each do |dir|
-#  directory dir do
-#    owner "www-data"
-#    group "www-data"
-#    mode 0644
-#    action :create
-#  end
-#end
-#
-#remote_file "/var/www/html/owncloud-6.0.0a.tar.bz2" do
-#  source "http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2"
-#  action :create_if_missing
-#  owner "www-data"
-#  group "www-data"
-#  mode 0644
-#  notifies :run, "execute[extract_owncloud]", :immediately
-#end
-#
-#execute "extract_owncloud" do
-#  command <<-EOH
-#  tar -xjf owncloud-6.0.0a.tar.bz2
-#  chown -R www-data:www-data owncloud
-#  EOH
-#  cwd "/var/www/html"
-#  user "root"
-#  action :nothing
-#end
+#"owncloud" : {
+#  "www_dir" : "/var/www",
+#  "web_server" : "nginx",
+#  "server_aliases" : "owncloud",
+#  "ssl" : false,
+#  "admin" : {
+#    "user" : "admin",
+#    "pass" : "owncloud"
+#  },
+#  "config" : {
+#    "dbtype" : "mysql",
+#    "dbpassword" : "owncloud"
+#  }
+#},
+mysql_connection_info = {
+  :host => "localhost",
+  :username => "root",
+  :password => node["mysql"]["server_root_password"]
+}
+
+mysql_database "owncloud" do
+  connection mysql_connection_info
+  action :create
+end
+
+mysql_database_user "owncloud" do
+  connection mysql_connection_info
+  database_name "owncloud"
+  password "owncloud"
+  privileges [:all]
+  action :grant
+end
+
+%w{/var/www /var/www/html}.each do |dir|
+  directory dir do
+    owner "www-data"
+    group "www-data"
+    mode 0755
+    action :create
+  end
+end
+
+remote_file "/var/www/owncloud-6.0.0a.tar.bz2" do
+  source "http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2"
+  action :create_if_missing
+  owner "www-data"
+  group "www-data"
+  mode 0644
+  notifies :run, "execute[extract_owncloud]", :immediately
+end
+
+execute "extract_owncloud" do
+  command <<-EOH
+  tar -xjf owncloud-6.0.0a.tar.bz2
+  chown -R www-data:www-data owncloud
+  EOH
+  cwd "/var/www/html"
+  user "root"
+  action :nothing
+end
 
 #wordpress
 #%w{tar wget php5 php5-fpm php5-mysql phpmyadmin}.each do |pkg|
