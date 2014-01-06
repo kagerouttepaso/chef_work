@@ -1,2 +1,2 @@
 #ssh port
-default[:iptables_basic][:sshport] = "22"
+default[:iptables_basic][:sshport] = node[:openssh][:server][:port]

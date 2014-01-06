@@ -1,16 +1,21 @@
 {
   "run_list" : [
+    "recipe[apt]",
     "recipe[simple_iptables]",
     "recipe[iptables_basic]",
 
     "recipe[user_base]",
     "recipe[user]",
     "recipe[user::data_bag]",
+    "recipe[desktop]",
 
     "recipe[sudo]",
     "recipe[openssh]",
     "recipe[base]"
       ],
+
+    "_comment_users_setting" : [ "readme file : ./cookbooks/user/README.md" ],
+    "users": ["kitsunai"],
 
     "_comment_sudo_setting" : [ "readme file :  ./cookbooks/sudo/README.md"],
     "authorization" : {
@@ -63,8 +68,6 @@
       }
     },
 
-    "_comment_users_setting" : [ "readme file : ./cookbooks/user/README.md" ],
-    "users": ["kitsunai"],
 
     "_comment_base_setting" : [ "readme file : ./site-cookbooks/base/README.md"],
     "base" : {
