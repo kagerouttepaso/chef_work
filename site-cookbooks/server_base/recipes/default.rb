@@ -11,7 +11,7 @@
 directory "/var/cache/logwatch" do
   owner "root"
   group "root"
-  mode 0644
+  mode "644"
   action :create
 end
 
@@ -32,7 +32,7 @@ end
 
 template "/etc/logwatch/conf/logwatch.conf" do
   source "logwatch.conf.erb"
-  mode 0644
+  mode "644"
   owner "root"
   group "root"
   variables ({
@@ -62,14 +62,14 @@ end
 #nginx
 template "/usr/share/nginx/www/index.php" do
   source "index.php.erb"
-  mode 0644
+  mode "644"
   owner "root"
   group "root"
 end
 
 template "/etc/nginx/sites-available/phptest" do
   source "phptest.erb"
-  mode 0644
+  mode "644"
   owner "root"
   group "root"
 end
@@ -117,21 +117,39 @@ end
   directory dir do
     owner "www-data"
     group "www-data"
-    mode 0755
+    mode "755"
     action :create
   end
 end
 
+owncloud_path = ::File.join(Chef::Config[:file_cache_path], "owncloud-6.0.0a.tar.bz2")
+
+remote_file 'download owncloud' do
+  source "http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2"
+  path owncloud_path
+  action :create_if_missing
+  owner "root"
+  group "root"
+  mode "644"
+end
+
 execute "extract_owncloud" do
   command <<-EOH
-  wget http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2
-  tar -xjf owncloud-6.0.0a.tar.bz2
+  tar -xjf '#{owncloud_path}' ./owncloud
   chown -R www-data:www-data owncloud
   EOH
   not_if do FileTest.directory?("/var/www/owncloud") end
   cwd "/var/www"
   user "root"
 end
+
+#jenkins
+# Allow HTTP,  HTTPS
+simple_iptables_rule "http" do
+  rule [ "--proto tcp --dport 8080"]
+  jump "ACCEPT"
+end
+
 
 #wordpress
 #%w{tar wget php5 php5-fpm php5-mysql phpmyadmin}.each do |pkg|
