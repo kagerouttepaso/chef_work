@@ -40,6 +40,25 @@ template "/etc/logwatch/conf/logwatch.conf" do
   })
 end
 
+#ntp
+package "ntp" do
+  action :upgrade
+end
+
+service "ntp" do
+  supports :status => true, :restart => true
+  action [:enable, :start]
+end
+
+template "/etc/ntp.conf" do
+  mode "644"
+  source "ntp.conf.erb"
+  variables ({
+    :ntp_server => node[:server_base][:ntp_server]
+  })
+  notifies :restart, "service[ntp]"
+end
+
 #nginx
 template "/usr/share/nginx/www/index.php" do
   source "index.php.erb"
@@ -103,23 +122,15 @@ end
   end
 end
 
-remote_file "/var/www/owncloud-6.0.0a.tar.bz2" do
-  source "http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2"
-  action :create_if_missing
-  owner "www-data"
-  group "www-data"
-  mode 0644
-  notifies :run, "execute[extract_owncloud]", :immediately
-end
-
 execute "extract_owncloud" do
   command <<-EOH
+  wget http://download.owncloud.org/community/owncloud-6.0.0a.tar.bz2
   tar -xjf owncloud-6.0.0a.tar.bz2
   chown -R www-data:www-data owncloud
   EOH
-  cwd "/var/www/html"
+  not_if do FileTest.directory?("/var/www/owncloud") end
+  cwd "/var/www"
   user "root"
-  action :nothing
 end
 
 #wordpress
