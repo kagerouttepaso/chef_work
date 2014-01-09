@@ -9,6 +9,8 @@
     "recipe[user::data_bag]",
     "recipe[desktop]",
 
+    "recipe[arm-linux]",
+
     "recipe[sudo]",
     "recipe[openssh]",
     "recipe[base]"
