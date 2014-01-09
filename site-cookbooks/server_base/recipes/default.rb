@@ -134,10 +134,10 @@ remote_file 'download owncloud' do
 end
 
 execute "extract_owncloud" do
-  command <<-EOH
-  tar -xjf '#{owncloud_path}' ./owncloud
+  command "
+  tar -xjf #{owncloud_path} &&
   chown -R www-data:www-data owncloud
-  EOH
+  "
   not_if do FileTest.directory?("/var/www/owncloud") end
   cwd "/var/www"
   user "root"
