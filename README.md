@@ -1,19 +1,21 @@
 chefの使い方
 =======================
 
-**このRecipeはUbuntu13.10でうまく動きます**
+**このRecipeはUbuntu12.04でうまく動きます**
 
 
-##環境のインストール
+###環境のインストール
 
 ```bash:bash
-#もしお仕事なら
-./install.sh oshigoto
 #プライベートユース
-./install.sh
+./install.sh 
 ```
 
-##repositoryの作り方
+---
+
+##chefの基本的な使い方
+
+###repositoryの作り方
 
 ```bash:bash
 #レポジトリを作る。
@@ -29,17 +31,16 @@ vim ./solo.rb
 #nodeごとにどんなRecipeを適用させるか設定する
 vim ./nodes/localhost.json
 ```
-----------------------
-##実行
+
 ###ローカル環境への適応方法
 
-####chef-solo使った方法
+####chef-solo使った方法(あまり推奨しない)
 
 ``` bash:bash
 sudo bundle exec chef-solo -c ./solo.rb -j ./nodes/localhost.json
 ```
 
-####Knife-solo使ったインストール
+####Knife-solo使ったインストール(こっちのほうがおすすめ)
 
 ```bash:bash
 bundle exec knife solo cook localhost
