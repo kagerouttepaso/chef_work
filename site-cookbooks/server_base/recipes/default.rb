@@ -67,7 +67,7 @@ template "/usr/share/nginx/www/index.php" do
   group "root"
 end
 
-template "/etc/nginx/sites-available/phptest" do
+template File.join(node["nginx"]["dir"], "sites-available", "phptest") do
   source "phptest.erb"
   mode "644"
   owner "root"
@@ -143,12 +143,47 @@ execute "extract_owncloud" do
   user "root"
 end
 
-#jenkins
-# Allow HTTP,  HTTPS
+php_fpm_pool "owncloud" do
+  user  node["nginx"]["user"]
+  group node["nginx"]["group"]
+  php_options({
+    "php_admin_value[upload_max_filesize]" => "512M",
+    "php_admin_value[post_max_size]" => "512M"
+  })
+end
+
+fastcgi_pass = "unix:/var/run/php-fpm-owncloud.sock"
+template File.join(node["nginx"]["dir"], "sites-available", "owncloud") do
+   source "owncloud.erb"
+   mode   "0644"
+   owner  "root"
+   group  "root"
+   variables(
+     :name             => "owncloud",
+     :docroot          => "/var/www/owncloud",
+     :port             => 10000,
+     :max_upload_size  => "512M",
+     :fastcgi_pass     => fastcgi_pass
+   )
+   notifies :reload, "service[nginx]"
+end
+
+nginx_site "owncloud" do
+  enable true
+end
+
 simple_iptables_rule "http" do
-  rule [ "--proto tcp --dport 8080"]
+  rule [ "--proto tcp --dport 10000"]
   jump "ACCEPT"
 end
+
+
+#jenkins
+# Allow HTTP,  HTTPS
+#simple_iptables_rule "http" do
+#  rule [ "--proto tcp --dport 8080"]
+#  jump "ACCEPT"
+#end
 
 
 #wordpress
