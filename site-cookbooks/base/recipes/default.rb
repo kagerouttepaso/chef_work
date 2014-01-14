@@ -7,7 +7,29 @@
 # All rights reserved - Do Not Redistribute
 #
 
-%w{tmux zsh vim-nox exuberant-ctags tree aptitude ruby ruby-dev rubygems gem git subversion git-svn tig paco mosh}.each do |pkg|
+#most need
+%w{tmux zsh vim-nox pandoc exuberant-ctags tree mosh}.each do |pkg|
+  package pkg do
+    action :upgrade
+  end
+end
+
+#package
+%w{aptitude paco}.each do |pkg|
+  package pkg do
+    action :upgrade
+  end
+end
+
+#ruby
+%w{ruby ruby-dev rubygems gem}.each do |pkg|
+  package pkg do
+    action :upgrade
+  end
+end
+
+#version manager
+%w{git subversion git-svn tig}.each do |pkg|
   package pkg do
     action :upgrade
   end
