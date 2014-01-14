@@ -1,20 +1,20 @@
 site :opscode
 
-cookbook 'nginx'
-cookbook 'mysql'
-cookbook 'database'
+cookbook 'vim'
+cookbook 'openssh'
 
 #account setting
 cookbook 'user'
 cookbook 'sudo'
 
 #server setting
-cookbook 'openssh'
+cookbook 'mysql'
+cookbook 'database'
+cookbook 'nginx'
 cookbook 'simple_iptables'
 
+#web app
 cookbook 'php'
 cookbook 'php-fpm'
-
-#web app
 cookbook 'owncloud'
 cookbook 'jenkins'
