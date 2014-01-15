@@ -8,7 +8,7 @@
 #
 
 #most need
-%w{tmux zsh vim-nox pandoc exuberant-ctags tree mosh}.each do |pkg|
+%w{tmux zsh vim-nox pandoc exuberant-ctags tree}.each do |pkg|
   package pkg do
     action :upgrade
   end
@@ -36,11 +36,26 @@ end
 end
 
 #mosh
+package "mosh" do
+  action :upgrade
+end
 simple_iptables_rule "mosh" do
   rule "--proto udp --dport 60000:61000"
   jump "ACCEPT"
 end
 
+#vim from souce
+vim_source_path = ::File.join(Chef::Config[:file_cache_path], "vim-7.4.tar.bz2");
+remote_file "download source of vim" do
+  source "http://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2"
+  path vim_source_path
+  action :create_if_missing
+  owner "root"
+  group "root"
+  mode "644"
+end
+
+#dotfiles
 repo = '/home/'+node[:current_user]+'/dotfiles'
 git repo do
   user node[:current_user]
