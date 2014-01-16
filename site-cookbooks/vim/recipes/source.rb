@@ -43,12 +43,11 @@ execute "unzip_vim" do
 end
 
 config=node['vim']['source']['configuration'].join(" ")
-bash "install_vim" do
+Chef::Log.logger.info config
+execute "install_vim" do
   cwd "#{cache_path}/vim-#{source_version}/"
-  code <<-EOH
-     ./configure #{config}
-     make
-     make install
+  command <<-EOH
+     ./configure #{config} && make && make install
   EOH
   action :run
 end
