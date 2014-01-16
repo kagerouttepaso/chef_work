@@ -20,6 +20,10 @@
 cache_path            = Chef::Config['file_cache_path']
 source_version        = node['vim']['source']['version']
 
+package "vim" do
+  action  :remove
+end
+
 node['vim']['source']['dependencies'].each do |dependency|
   package dependency do
     action :install
@@ -31,7 +35,6 @@ remote_file "#{cache_path}/vim-#{source_version}.tar.bz2" do
   checksum node['vim']['source']['checksum']
   notifies :run, "execute[unzip_vim]", :immediately
 end
-
 
 execute "unzip_vim" do
   action :nothing
