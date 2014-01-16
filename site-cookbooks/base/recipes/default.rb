@@ -8,10 +8,14 @@
 #
 
 #most need
-%w{tmux zsh vim-nox pandoc exuberant-ctags tree}.each do |pkg|
+%w{tmux zsh pandoc exuberant-ctags tree}.each do |pkg|
   package pkg do
     action :upgrade
   end
+end
+
+package "vim" do
+  action  :remove
 end
 
 #package

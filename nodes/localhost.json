@@ -13,6 +13,7 @@
 
     "recipe[sudo]",
     "recipe[openssh]",
+    "recipe[vim]",
     "recipe[base]"
       ],
 
@@ -74,5 +75,53 @@
     "_comment_base_setting" : [ "readme file : ./site-cookbooks/base/README.md"],
     "base" : {
       "dotfilesrepo" : "master"
+    },
+
+    "_comment_vim_setting" : [ "readme file : ./cookbooks/vim/README.md" ],
+    "vim" : {
+      "install_method" : "source",
+      "source" : {
+        "version" : "7.4",
+        "dependencies" : [
+          "gettext         ",
+          "libncurses5-dev ",
+          "libacl1-dev     ",
+          "libgpm-dev      ",
+          "libxmu-dev      ",
+          "libgnomeui-dev  ",
+          "libgtk2.0-dev   ",
+          "libxpm-dev      ",
+          "libperl-dev     ",
+          "python-dev      ",
+          "python3-dev     ",
+          "ruby-dev        ",
+          "lua5.2          ",
+          "liblua5.2-dev   ",
+          "luajit          ",
+          "libluajit-5.1   "
+        ],
+        "configuration" : [
+          "--with-features=huge     ",
+          "--enable-fail-if-missing ",
+          "--enable-perlinterp      ",
+          "--enable-pythoninterp    ",
+          "--enable-python3interp   ",
+          "--enable-rubyinterp      ",
+          "--enable-tclinterp       ",
+          "--enable-luainterp       ",
+          "--with-lua-prefix=/usr   ",
+          "--enable-fontset         ",
+          "--enable-multibyte       ",
+          "--enable-gpm             ",
+          "--enable-gui=auto        ",
+          "--enable-gnome2-check    ",
+          "--enable-gtk2-check      ",
+          "--enable-xim             ",
+          "--enable-cscope          ",
+          "--with-x                 ",
+          "--disable-selinux        ",
+          "--prefix=/usr/local      "
+        ]
+      }
     }
 }

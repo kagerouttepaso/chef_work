@@ -15,6 +15,7 @@ fi
 
 bundle install --path=.bundle
 bundle exec berks --path=cookbooks
+bundle exec berks update
 
 #install chef
 if [ ! -f "installed.lock" ]; then

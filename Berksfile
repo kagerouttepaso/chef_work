@@ -1,6 +1,6 @@
+
 site :opscode
 
-cookbook 'vim'
 cookbook 'openssh'
 
 #account setting
