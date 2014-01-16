@@ -8,7 +8,7 @@
 #
 
 #most need
-%w{tmux zsh pandoc exuberant-ctags tree}.each do |pkg|
+%w{tmux zsh pandoc exuberant-ctags tree xsel}.each do |pkg|
   package pkg do
     action :upgrade
   end
