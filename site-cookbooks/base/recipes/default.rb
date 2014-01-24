@@ -7,6 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe  "base::package"
+include_recipe  "base::packages"
 include_recipe  "base::dotfiles"
 
