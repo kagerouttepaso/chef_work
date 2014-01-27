@@ -6,7 +6,7 @@ chefの使い方
 
 ### 環境のインストール
 
-```bash:bash
+```bash
 # プライベートユース
 ./install.sh
 ```
