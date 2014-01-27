@@ -14,13 +14,39 @@ template "/usr/share/nginx/www/index.php" do
   group "root"
 end
 
-template File.join(node["nginx"]["dir"], "sites-available", "phptest") do
-  source "phptest.erb"
+#template File.join(node["nginx"]["dir"], "sites-available", "phptest") do
+#  source "phptest.erb"
+#  mode "644"
+#  owner "root"
+#  group "root"
+#end
+#
+#nginx_site "phptest" do
+#  enable true
+#end
+#
+
+directory "/var/cache/nginx" do
+  owner "www-data"
+  group "www-data"
+  mode "644"
+  action :create
+end
+
+template File.join("/etc/nginx/conf.d", "proxy.conf" ) do
+  source "proxy.conf.erb"
   mode "644"
   owner "root"
   group "root"
 end
 
-nginx_site "phptest" do
+template File.join(node["nginx"]["dir"], "sites-available", "reverse") do
+  source "reverse.erb"
+  mode "644"
+  owner "root"
+  group "root"
+end
+
+nginx_site "reverse" do
   enable true
 end
