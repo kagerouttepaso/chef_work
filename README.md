@@ -17,7 +17,7 @@ chefの使い方
 
 ### repositoryの作り方
 
-```bash:bash
+```bash
 # レポジトリを作る。
 bundle exec knife solo init chef-repo
 cd chef-repo
@@ -36,13 +36,13 @@ vim ./nodes/localhost.json
 
 #### chef-solo使った方法(あまり推奨しない)
 
-``` bash:bash
+``` bash
 sudo bundle exec chef-solo -c ./solo.rb -j ./nodes/localhost.json
 ```
 
 #### Knife-solo使ったインストール(こっちのほうがおすすめ)
 
-```bash:bash
+```bash
 bundle exec knife solo cook localhost
 ```
 
@@ -56,18 +56,18 @@ bundle exec knife solo cook localhost
 
 1, 対象へ chefをインストールする
 
-```bash:bash
+```bash
 bundle exec knife solo prepare <hostname>
 ```
 
 2, Jsonファイルを編集する
 
-```bash:bash
+```bash
 vim ./nodes/<hostname>.json
 ```
 
 3, chefを起動する
 
-```bash:bash
+```bash
 bundle exec knife solo cook <hostname>
 ```
