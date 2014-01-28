@@ -33,12 +33,12 @@ directory "/var/cache/nginx" do
   action :create
 end
 
-template File.join("/etc/nginx/conf.d", "proxy.conf" ) do
-  source "proxy.conf.erb"
-  mode "644"
-  owner "root"
-  group "root"
-end
+#template File.join("/etc/nginx/conf.d", "proxy.conf" ) do
+#  source "proxy.conf.erb"
+#  mode "644"
+#  owner "root"
+#  group "root"
+#end
 
 template File.join(node["nginx"]["dir"], "sites-available", "reverse") do
   source "reverse.erb"
@@ -48,5 +48,5 @@ template File.join(node["nginx"]["dir"], "sites-available", "reverse") do
 end
 
 nginx_site "reverse" do
-  enable true
+  enable false
 end
