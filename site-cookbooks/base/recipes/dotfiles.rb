@@ -19,10 +19,10 @@ git repo do
 end
 
 bash 'after_sync'do
+  user node[:current_user]
   action :nothing
   flags '-x'
   code <<-__EOL__
-  echo install dotfiles
   cd ~/dotfiles
   ./install.sh
   __EOL__
