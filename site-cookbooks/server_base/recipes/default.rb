@@ -15,6 +15,10 @@ include_recipe "server_base::nginx_start_page"
 if node[:server_base][:do_test]
   include_recipe "server_base::owncloud"
 
+  simple_iptables_rule "http" do
+    rule [ "--proto tcp --dport 3000" ]
+    jump "ACCEPT"
+  end
 
   #jenkins
   # Allow HTTP,  HTTPS
