@@ -7,8 +7,16 @@
 # All rights reserved - Do Not Redistribute
 #
 
+if node['platform_version'].to_f >= 13.04  then
+  %w{silversearcher-ag}.each do |pkg|
+    package pkg do
+      action :upgrade
+    end
+  end
+end
+
 #most need
-%w{git tmux zsh pandoc exuberant-ctags xclip curl silversearcher-ag}.each do |pkg|
+%w{git tmux zsh pandoc exuberant-ctags xclip curl}.each do |pkg|
   package pkg do
     action :upgrade
   end
