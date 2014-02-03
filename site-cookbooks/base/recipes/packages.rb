@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 
 #most need
-%w{tmux zsh pandoc exuberant-ctags tree xclip curl}.each do |pkg|
+%w{tmux zsh pandoc exuberant-ctags tree xclip curl silversearcher-ag}.each do |pkg|
   package pkg do
     action :upgrade
   end
