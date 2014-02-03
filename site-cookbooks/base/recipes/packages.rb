@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 
 #most need
-%w{tmux zsh pandoc exuberant-ctags tree xclip curl silversearcher-ag}.each do |pkg|
+%w{git tmux zsh pandoc exuberant-ctags xclip curl silversearcher-ag}.each do |pkg|
   package pkg do
     action :upgrade
   end
@@ -15,7 +15,7 @@ end
 
 
 #package
-%w{aptitude paco}.each do |pkg|
+%w{aptitude paco tree}.each do |pkg|
   package pkg do
     action :upgrade
   end
@@ -29,7 +29,7 @@ end
 end
 
 #version manager
-%w{git subversion git-svn tig}.each do |pkg|
+%w{subversion git-svn tig}.each do |pkg|
   package pkg do
     action :upgrade
   end

@@ -7,6 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
+#most need
+%w{git tmux zsh pandoc exuberant-ctags xclip curl silversearcher-ag}.each do |pkg|
+  package pkg do
+    action :upgrade
+  end
+end
+
 #dotfiles
 repo = '/home/'+node[:current_user]+'/dotfiles'
 
