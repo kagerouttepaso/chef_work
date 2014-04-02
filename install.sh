@@ -9,19 +9,22 @@ fi
 
 #install package
 if [ ! -f "installed.lock" ]; then
-    sudo apt-get install ruby ruby-dev openssh-server rubygems gem
-    sudo gem1.9.3 i bundler --no-ri --no-rdoc
+    sudo apt-get install openssh-server rbenv ruby-build
+    rbenv install 1.9.3-rc1
+    rbenv local 1.9.3-rc1
+    rbenv rehash
+    rbenv exec gem i bundler --no-ri --no-rdoc
 fi
 
-bundle install --path=.bundle
-bundle exec berks --path=cookbooks
-bundle exec berks update
+rbenv exec bundle install --path=.bundle
+rbenv exec bundle exec berks --path=cookbooks
+rbenv exec bundle exec berks update
 
 #install chef
 if [ ! -f "installed.lock" ]; then
-    bundle exec knife solo prepare localhost
+    rbenv exec bundle exec knife solo prepare localhost
     touch installed.lock
 fi
 
-#cook
+##cook
 bundle exec knife solo cook ${HostName}
