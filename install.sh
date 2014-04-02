@@ -27,4 +27,4 @@ if [ ! -f "installed.lock" ]; then
 fi
 
 ##cook
-bundle exec knife solo cook ${HostName}
+rbenv exec bundle exec knife solo cook ${HostName}
