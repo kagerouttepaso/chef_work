@@ -72,7 +72,7 @@ end
 
 package "syslinux" do
   action :upgrade
-  notifies :run, 'bash[copy_pxelinux_0]'
+  notifies :run, 'bash[copy_pxelinux_0]', :immediately
 end
 
 bash 'copy_pxelinux_0'do
@@ -114,7 +114,7 @@ end
 
 package "grub-efi" do
   action :upgrade
-  notifies :run, 'bash[make_netdir]'
+  notifies :run, 'bash[make_netdir]', :immediately
 end
 
 bash 'make_netdir' do
