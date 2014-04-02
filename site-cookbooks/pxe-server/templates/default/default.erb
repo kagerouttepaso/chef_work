@@ -1,0 +1,4 @@
+default ubuntu
+label ubuntu
+  kernel image/ubuntu-13.10-desktop-amd64/casper/vmlinuz.efi
+  append boot=casper netboot=nfs nfsroot=192.168.150.10:/var/lib/tftpboot/image/ubuntu-13.10-desktop-amd64 initrd=image/ubuntu-13.10-desktop-amd64/casper/initrd.lz

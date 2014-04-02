@@ -23,7 +23,7 @@ bundle exec knife solo init chef-repo
 cd chef-repo
 
 # Recipeを作る
-bundle exec knife cookbook create base -o site-cookbooks/
+rbenv exec bundle exec knife cookbook create base -o site-cookbooks/
 
 # chef-solo用ファイルを作る (knife-soloには必要ない)
 vim ./solo.rb
