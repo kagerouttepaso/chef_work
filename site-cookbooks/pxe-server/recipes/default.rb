@@ -58,7 +58,7 @@ end
 directory "/var/lib/tftpboot/pxelinux.cfg" do
   owner "root"
   group "root"
-  mode "644"
+  mode "755"
   action :create
 end
 
@@ -92,14 +92,14 @@ end
 directory "/var/lib/tftpboot/image" do
   owner "root"
   group "root"
-  mode "644"
+  mode "755"
   action :create
 end
 
 directory "/var/lib/tftpboot/image/ubuntu-13.10-desktop-amd64" do
   owner "root"
   group "root"
-  mode "644"
+  mode "755"
   action :create
 end
 
