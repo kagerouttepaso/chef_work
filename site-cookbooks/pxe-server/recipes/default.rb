@@ -133,3 +133,10 @@ template "/var/lib/tftpboot/boot/grub/grub.cfg" do
   group "root"
 end
 
+%w{isc-dhcp-server tftpd-hpa nfs-kernel-server}.each do |svc|
+  service svc do
+    supports :restart => true, :reload => true
+    action [:enable, :reload]
+  end
+end
+
