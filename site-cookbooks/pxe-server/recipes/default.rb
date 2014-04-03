@@ -41,7 +41,7 @@ end
 #mount
 template "/etc/rc.local" do
   source "rc.local.erb"
-  mode "644"
+  mode "755"
   owner "root"
   group "root"
 end
