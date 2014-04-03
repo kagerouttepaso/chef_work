@@ -1,13 +1,11 @@
 chefの使い方
 =======================
 
-**このRecipeはUbuntu12.04でうまく動きます**
-
+**このRecipeはUbuntu 13.10でうまく動きます**
 
 ### 環境のインストール
 
 ```bash
-# プライベートユース
 ./install.sh
 ```
 
@@ -18,8 +16,8 @@ chefの使い方
 ### repositoryの作り方
 
 ```bash
-# レポジトリを作る。
-bundle exec knife solo init chef-repo
+# レポジトリを作る。(このリポジトリみたいなものを作る)
+rbenv exec bundle exec knife solo init chef-repo
 cd chef-repo
 
 # Recipeを作る
@@ -29,7 +27,7 @@ rbenv exec bundle exec knife cookbook create base -o site-cookbooks/
 vim ./solo.rb
 
 # nodeごとにどんなRecipeを適用させるか設定する
-vim ./nodes/localhost.json
+vim ./nodes/hostname.json
 ```
 
 ### ローカル環境への適応方法
@@ -37,13 +35,15 @@ vim ./nodes/localhost.json
 #### chef-solo使った方法(あまり推奨しない)
 
 ``` bash
-sudo bundle exec chef-solo -c ./solo.rb -j ./nodes/localhost.json
+sudo rbenv exec bundle exec chef-solo -c ./solo.rb -j ./nodes/localhost.json
 ```
 
 #### Knife-solo使ったインストール(こっちのほうがおすすめ)
+基本的に`install.sh`を叩いておけば、ローカルに対してchefが実行されるので、
+下記のコマンドを頑張って入力する必要はない
 
 ```bash
-bundle exec knife solo cook localhost
+rbenv exec bundle exec knife solo cook localhost
 ```
 
 ### ネットワークこしにChefる
@@ -57,7 +57,7 @@ bundle exec knife solo cook localhost
 1, 対象へ chefをインストールする
 
 ```bash
-bundle exec knife solo prepare <hostname>
+rbenv exec bundle exec knife solo prepare <hostname>
 ```
 
 2, Jsonファイルを編集する
@@ -69,5 +69,5 @@ vim ./nodes/<hostname>.json
 3, chefを起動する
 
 ```bash
-bundle exec knife solo cook <hostname>
+rbenv exec bundle exec knife solo cook <hostname>
 ```
