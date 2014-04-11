@@ -1,4 +1,7 @@
 #!/bin/bash
+RUBY_VERSION="`cat ./.ruby-version`"
+
+#install rbenv
 sudo apt-get install openssh-server git
 if [ ! -d ~/.rbenv ]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -14,22 +17,25 @@ else
     HostName=$1
 fi
 
-#install package
-if [ ! -f "installed.lock" ]; then
-    rbenv install 1.9.3-rc1
-    rbenv local 1.9.3-rc1
+#install ruby and bundle
+if [ "`rbenv versions | grep ${RUBY_VERSION}`" = "" ]; then
+    rbenv install "${RUBY_VERSION}"
+    rbenv local "${RUBY_VERSION}"
     rbenv rehash
     rbenv exec gem i bundler --no-ri --no-rdoc
+else
+    echo "ruby ${RUBY_VERSION} is installed"
 fi
 
+# install pakagees of bundle and beaks
 rbenv exec bundle install --path=.bundle
 rbenv exec bundle exec berks --path=cookbooks
 rbenv exec bundle exec berks update
 
 #install chef
-if [ ! -f "installed.lock" ]; then
-    rbenv exec bundle exec knife solo prepare localhost
-    touch installed.lock
+if [ "$2" = "init" ]; then
+    echo "install chef ${HostName}"
+    rbenv exec bundle exec knife solo prepare ${HostName}
 fi
 
 ##cook
