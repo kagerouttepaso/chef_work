@@ -2,7 +2,7 @@
 RUBY_VERSION="`cat ./.ruby-version`"
 
 #install rbenv
-sudo apt-get install openssh-server git
+sudo apt-get install openssh-server git zliblg-dev libssl-dev
 if [ ! -d ~/.rbenv ]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
@@ -20,12 +20,14 @@ fi
 #install ruby and bundle
 if [ "`rbenv versions | grep ${RUBY_VERSION}`" = "" ]; then
     rbenv install "${RUBY_VERSION}"
-    rbenv local "${RUBY_VERSION}"
-    rbenv rehash
-    rbenv exec gem i bundler --no-ri --no-rdoc
 else
     echo "ruby ${RUBY_VERSION} is installed"
 fi
+
+#set ruby
+rbenv local "${RUBY_VERSION}"
+rbenv rehash
+rbenv exec gem i bundler --no-ri --no-rdoc
 
 # install pakagees of bundle and beaks
 rbenv exec bundle install --path=.bundle
