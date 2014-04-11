@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get install openssh-server git
-if [ ! -d "~/.rbenv" ]; then
+if [ ! -d ~/.rbenv ]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 fi

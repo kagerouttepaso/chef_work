@@ -14,13 +14,6 @@
   end
 end
 
-#ruby
-%w{ruby ruby-dev rubygems gem}.each do |pkg|
-  package pkg do
-    action :upgrade
-  end
-end
-
 #version manager
 %w{subversion git-svn tig}.each do |pkg|
   package pkg do

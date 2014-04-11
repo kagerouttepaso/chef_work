@@ -30,7 +30,7 @@ git repo do
   reference node[:base][:dotfilesrepo]
   repository 'https://github.com/kagerouttepaso/dotfiles.git'
   action :sync
-  notifies :run, 'bash[after_sync]'
+  notifies :run, 'bash[after_sync]', :immediately
 end
 
 bash 'after_sync'do
