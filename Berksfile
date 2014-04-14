@@ -20,3 +20,7 @@ cookbook "php"
 cookbook "php-fpm"
 cookbook "owncloud"
 cookbook "jenkins"
+
+#must study
+cookbook "application"
+cookbook "application_nginx"
