@@ -7,6 +7,16 @@
 # All rights reserved - Do Not Redistribute
 #
 
+%w{/usr/share /usr/share/nginx /usr/share/nginx/www}.each do |dir|
+  directory dir do
+    owner "root"
+    group "root"
+    mode "755"
+    action :create
+  end
+end
+
+
 template "/usr/share/nginx/www/index.php" do
   source "index.php.erb"
   mode "644"
