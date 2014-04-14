@@ -1,5 +1,5 @@
 #cookbook "gitlab", git: "https://gitlab.com/kagerouttepaso/cookbook-gitlab.git"
-cookbook "gitlab", git: "https://gitlab.com/gitlab-org/cookbook-gitlab.git"
+#cookbook "gitlab", git: "https://gitlab.com/gitlab-org/cookbook-gitlab.git"
 
 site :opscode
 
@@ -20,3 +20,4 @@ cookbook "php"
 cookbook "php-fpm"
 cookbook "owncloud"
 cookbook "jenkins"
+cookbook "gitlab"
