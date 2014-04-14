@@ -17,3 +17,15 @@ knife[:berkshelf_path] = "cookbooks"
 #ftp_proxy   "http://172.16.100.151:3128"
 #no_proxy    "192.168.*"
 
+if ENV["http_proxy"]
+  require 'rest-client'
+  RestClient.proxy = ENV["http_proxy"]
+
+  require 'uri'
+  proxy_env = URI.parse(ENV["http_proxy"])
+
+  http_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
+  https_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
+  ftp_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
+  no_proxy "192.168.*"
+end
