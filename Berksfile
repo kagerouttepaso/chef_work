@@ -21,3 +21,7 @@ cookbook "php-fpm"
 cookbook "owncloud"
 cookbook "jenkins"
 cookbook "gitlab"
+
+#must study
+cookbook "application"
+cookbook "application_nginx"
