@@ -10,6 +10,7 @@ cookbook "user"
 cookbook "sudo"
 
 #server setting
+cookbook "postgresql"
 cookbook "mysql"
 cookbook "database"
 cookbook "nginx"
