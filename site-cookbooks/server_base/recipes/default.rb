@@ -11,6 +11,56 @@ include_recipe "server_base::logwatch"
 include_recipe "server_base::ntp"
 include_recipe "server_base::nginx_start_page"
 
+if( node["platform"] == "ubuntu")
+  apt_repository "owncloud" do
+    uri "http://download.opensuse.org/repositories/isv:/ownCloud:/community/xUbuntu_" + node["platform_version"]
+    components ["/"]
+    key "http://download.opensuse.org/repositories/isv:ownCloud:community/xUbuntu_" + node["platform_version"] + "/Release.key"
+  end
+
+  package "owncloud-sqlite" do
+    action :upgrade
+  end
+
+  package "owncloud" do
+    action :upgrade
+  end
+
+  simple_iptables_rule "http" do
+    rule [ "--proto tcp --dport 10000"]
+    jump "ACCEPT"
+  end
+
+#  template File.join(node["nginx"]["dir"], "sites-available", "owncloud") do
+#    source "owncloud.erb"
+#    mode   "0644"
+#    owner  "root"
+#    group  "root"
+#    variables(
+#      :name             => "owncloud",
+#      :port             => 10000,
+#    )
+#    notifies :reload, "service[nginx]"
+#  end
+
+    php_fpm_pool "owncloud" do
+      user  node["nginx"]["user"]
+      group node["nginx"]["group"]
+      php_options({
+        "php_admin_value[upload_max_filesize]" => "1000M",
+        "php_admin_value[post_max_size]" => "1000M"
+      })
+    end
+
+    nginx_site "owncloud" do
+      template "owncloud.erb"
+      port 10000
+      docroot "/var/www/owncloud"
+      directory_index "index.php"
+      default_server true
+      enable true
+    end
+end
 
 if node[:server_base][:do_test]
   include_recipe "server_base::owncloud"
