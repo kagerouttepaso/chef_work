@@ -80,7 +80,9 @@
 
     "_comment_vim_setting" : [ "readme file : ./cookbooks/vim/README.md" ],
     "vim" : {
-      "install_method" : "source",
+      "extra_packages" : {
+         "vim-nox"
+      },
       "source" : {
         "version" : "7.4",
         "dependencies" : [
