@@ -13,9 +13,7 @@
     "recipe[base]",
 
     "recipe[nginx]",
-    "recipe[mysql::server]",
     "recipe[postgresql::server]",
-    "recipe[database::mysql]",
 
     "recipe[php]",
     "recipe[php-fpm]",
@@ -108,7 +106,7 @@
 
   "gitlab":{
     "database_adapter" :"postgresql",
-    "host"             :"172.16.26.3",
+    "host"             :"localhost",
     "database_password":"datapass",
     "port"             :"80",
     "max_size"         :"1048576000"
