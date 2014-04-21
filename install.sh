@@ -2,7 +2,7 @@
 RUBY_VERSION="`cat ./.ruby-version`"
 
 #install rbenv
-sudo apt-get install openssh-server git zlib1g-dev libssl-dev
+sudo apt-get install openssh-server git zlib1g-dev libssl-dev g++ autoconf
 if [ ! -d ~/.rbenv ]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
@@ -32,7 +32,7 @@ rbenv rehash
 
 # install pakagees of bundle and beaks
 rbenv exec bundle install --path=.bundle
-rbenv exec bundle exec berks --path=cookbooks
+rbenv exec bundle exec berks vendor ./cookbooks
 rbenv exec bundle exec berks update
 
 #install chef
