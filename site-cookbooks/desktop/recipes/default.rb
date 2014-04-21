@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-%w{lubuntu-desktop}.each do |pkg|
+%w{xubuntu-desktop}.each do |pkg|
   package pkg do
     action :upgrade
   end
