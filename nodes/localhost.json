@@ -25,7 +25,12 @@
       "sudo" : {
         "groups"       : ["admin", "wheel", "sysadmin"],
         "users"        : ["kitsunai"],
-        "passwordless" : "true"
+        "passwordless" : "true", 
+        "sudoers_defaults" : [
+          "env_reset", 
+          "secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"", 
+          "env_keep=\"http_proxy https_proxy ftp_proxy no_proxy\""
+          ]
       }
     },
 
