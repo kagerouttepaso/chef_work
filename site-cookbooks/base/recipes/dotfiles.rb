@@ -30,15 +30,16 @@ git repo do
   reference node[:base][:dotfilesrepo]
   repository 'https://github.com/kagerouttepaso/dotfiles.git'
   action :sync
-  notifies :run, 'bash[after_sync]', :immediately
+  notifies :run, 'execute[after_sync]', :immediately
 end
 
-bash 'after_sync'do
-  user node[:current_user]
-  action :nothing
-  flags '-x'
-  code <<-__EOL__
-  cd ~/dotfiles
-  ./install.sh
-  __EOL__
+home_dir="/home/"+node[:current_user]
+execute "after_sync" do
+  user    node[:current_user]
+  action  :nothing
+  cwd     home_dir+"/dotfiles"
+   command "./install.sh"
+  environment(
+    "HOME" => home_dir
+  )
 end
