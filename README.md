@@ -13,6 +13,24 @@ chefの使い方
 1. `localhost` にsshログインできるようにする
 1. 下記のコマンド実行
 
+
+**/etc/enviroments**
+
+```
+http_proxy="http://proxy.com:port"
+https_proxy="http://proxy.com:port"
+ftp_proxy="http://proxy.com:port"
+no_proxy="localhost 192.168.*.*"
+```
+
+**/etc/suなんとか**
+
+```
+Defaults  env_keep="http_proxy https_proxy ftp_proxy no_proxy"
+```
+
+**コマンド**
+
 ```bash
 ./install.sh localhost init
 ```
