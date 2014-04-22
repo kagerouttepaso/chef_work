@@ -3,13 +3,18 @@ chefの使い方
 
 **このRecipeはUbuntu 14.04でうまく動きます**
 
-### todo
-- proxy
-
 ### 環境のインストール
 
+1. proxyの設定があるなら済ます
+    - `ubuntu14.04`
+    - `ubuntu14.04` だと、Sudoで環境変数を引き継げないみたい
+    - `sudo vim /etc/enviroments` `sudo visudo` でプロキシ設定を入れのが最短？？
+1. `openssh-server` をインストール
+1. `localhost` にsshログインできるようにする
+1. 下記のコマンド実行
+
 ```bash
-./install.sh
+./install.sh localhost init
 ```
 
 ---
@@ -18,38 +23,31 @@ chefの使い方
 
 ### repositoryの作り方
 
-```bash
+``` bash
 # レポジトリを作る。(このリポジトリみたいなものを作る)
 rbenv exec bundle exec knife solo init chef-repo
 cd chef-repo
 
 # Recipeを作る
-rbenv exec bundle exec knife cookbook create base -o site-cookbooks/
-
-# chef-solo用ファイルを作る (knife-soloには必要ない)
-vim ./solo.rb
+rbenv exec bundle exec knife cookbook create <recipe_name> -o site-cookbooks/
 
 # nodeごとにどんなRecipeを適用させるか設定する
-vim ./nodes/hostname.json
+vim ./nodes/<hostname>.json
 ```
 
 ### ローカル環境への適応方法
 
-#### chef-solo使った方法(あまり推奨しない)
-
-``` bash
-sudo rbenv exec bundle exec chef-solo -c ./solo.rb -j ./nodes/localhost.json
-```
-
-#### Knife-solo使ったインストール(こっちのほうがおすすめ)
+#### Knife-solo使ったインストール
 基本的に`install.sh`を叩いておけば、ローカルに対してchefが実行されるので、
 下記のコマンドを頑張って入力する必要はない
 
 ```bash
 rbenv exec bundle exec knife solo cook localhost
+#or
+./install.sh
 ```
 
-### ネットワークこしにChefる
+### ネットワーク越しにChefる
 #### 前提条件
 
 - 対象PCへsshログインができること
@@ -61,6 +59,8 @@ rbenv exec bundle exec knife solo cook localhost
 
 ```bash
 rbenv exec bundle exec knife solo prepare <hostname>
+#or
+./install.sh <hostname> init
 ```
 
 2, Jsonファイルを編集する
@@ -73,4 +73,6 @@ vim ./nodes/<hostname>.json
 
 ```bash
 rbenv exec bundle exec knife solo cook <hostname>
+#or
+./install.sh <hostname>
 ```
