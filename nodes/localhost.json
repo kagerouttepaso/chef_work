@@ -85,7 +85,7 @@
   "_comment_vim_setting" : [ "readme file : ./cookbooks/vim/README.md" ],
   "vim" : {
     "extra_packages" : [
-       "vim-nox"
+       "vim-nox",
        "vim-gnome",
        "vim-gtk"
     ],
