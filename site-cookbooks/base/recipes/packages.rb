@@ -43,15 +43,15 @@ if node['platform_version'].to_f >= 14.04  then
     owner "root"
     group "root"
     variables({
-      :proxy => "172.16.2.9",
-      :dns   => "172.16.2.16"
+      :proxy => node[:base][:docker][:proxy], 
+      :dns   => node[:base][:docker][:dns]
     })
-    notifies :restart, "service[docker.io]", :immediately
+    notifies :restart, "service[docker.io]"
   end
 
   service "docker.io" do
-    supports :status => true
-    action [:enable, :start]
+    supports :status => true, :restart => true
+    action [:enable]
   end
 
   simple_iptables_rule "shipyard" do
