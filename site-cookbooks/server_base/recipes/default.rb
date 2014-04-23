@@ -11,14 +11,14 @@ include_recipe "server_base::logwatch"
 include_recipe "server_base::ntp"
 include_recipe "server_base::nginx_start_page"
 
+  simple_iptables_rule "gitlab" do
+    rule [ "--proto tcp --dport 3000" ]
+    jump "ACCEPT"
+  end
 
 if node[:server_base][:do_test]
   include_recipe "server_base::owncloud"
 
-  simple_iptables_rule "http" do
-    rule [ "--proto tcp --dport 3000" ]
-    jump "ACCEPT"
-  end
 
   #jenkins
   # Allow HTTP,  HTTPS
