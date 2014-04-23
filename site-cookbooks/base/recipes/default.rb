@@ -9,4 +9,5 @@
 
 include_recipe  "base::packages"
 include_recipe  "base::dotfiles"
+include_recipe  "base::group"
 
