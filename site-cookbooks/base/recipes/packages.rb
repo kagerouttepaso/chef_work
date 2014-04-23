@@ -36,6 +36,24 @@ if node['platform_version'].to_f >= 14.04  then
       action :upgrade
     end
   end
+
+  template "/etc/default/docker.io" do
+    source "docker.io.erb"
+    mode "644"
+    owner "root"
+    group "root"
+    variables({
+      :proxy => "172.16.2.9",
+      :dns   => "172.16.2.16"
+    })
+    notifies :restart, "service[docker.io]", :immediately
+  end
+
+  service "docker.io" do
+    supports :status => true
+    action [:enable, :start]
+  end
+
   simple_iptables_rule "shipyard" do
     rule "--proto tcp --dport 8000"
     jump "ACCEPT"
@@ -43,12 +61,13 @@ if node['platform_version'].to_f >= 14.04  then
 
   home_dir="/home/"+node[:current_user]
   execute "run docker ui" do
-    user    node[:current_user]
+    user    "root"
     action  :nothing
-    cwd     home_dir
-    command "./install.sh"
-    environment(
-      "HOME" => home_dir
-    )
+    command <<-EOH
+    docker.io run -i -t -v /var/run/docker.sock:/docker.sock shipyard/deploy setup
+    curl https://github.com/shipyard/shipyard-agent/releases/download/v0.3.1/shipyard-agent -L -o /usr/local/bin/shipyard-agent
+    chmod +x /usr/local/bin/shipyard-agent
+    shipyard-agent -url http://172.16.6.10:8000 -register
+    EOH
   end
 end
