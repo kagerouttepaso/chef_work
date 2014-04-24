@@ -10,3 +10,4 @@
 include_recipe  "base::packages"
 include_recipe  "base::dotfiles"
 include_recipe  "base::register_sshkey"
+include_recipe  "base::apt_upgrade"
