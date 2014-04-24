@@ -1,9 +1,12 @@
 {
-  "id"         : "kitsunai",
-  "comment"    : "Kitsunai Daisuke",
-  "shell"      : "/bin/bash",
-  "ssh_keygen" : "false",
-  "action"     : "create",
+  "id"           : "kitsunai",
+  "comment"      : "Kitsunai Daisuke",
+  "action"       : "create",
+
+  "shell"        : "/bin/bash",
+  "ssh_keygen"   : "true",
+
+  "groups"        : ["docker", "vboxsf", "www-data"],
 
   "password"   : "$6$kitsunai$kzKmt9.wC7b4kqG1SDBqJil8hxpd5RyjaXnWwvZ95QVOqDpXjyrbv.DOBPRijN835kagsQXLOxTsLrtnEJIii.",
   "ssh_keys"   : [
