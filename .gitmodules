@@ -1,0 +1,3 @@
+[submodule "private-cookbooks"]
+	path = private-cookbooks
+	url = https://kagerouttepaso@bitbucket.org/kagerouttepaso/private-cookbooks.git
