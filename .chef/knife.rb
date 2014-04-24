@@ -1,5 +1,5 @@
 cookbook_path    ["cookbooks", "site-cookbooks", "private-cookbooks"]
-node_path        "nodes"
+node_path        ["nodes", "private-cookbooks/nodes"]
 role_path        "roles"
 environment_path "environments"
 data_bag_path    "data_bags"
