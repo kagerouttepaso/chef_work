@@ -1,4 +1,4 @@
-cookbook_path    ["cookbooks", "site-cookbooks"]
+cookbook_path    ["cookbooks", "site-cookbooks", "private-cookbooks"]
 node_path        "nodes"
 role_path        "roles"
 environment_path "environments"
@@ -16,14 +16,14 @@ ssl_verify_mode :verify_peer
 #https_proxy "http://172.16.100.151:3128"
 #no_proxy    "192.168.*"
 
-#if ENV["http_proxy"]
-#  require 'rest-client'
-#  RestClient.proxy = ENV["http_proxy"]
-#
-#  require 'uri'
-#  proxy_env = URI.parse(ENV["http_proxy"])
-#
-#  http_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
-#  https_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
-#  no_proxy "192.168.*"
-#end
+if ENV["http_proxy"]
+  require 'rest-client'
+  RestClient.proxy = ENV["http_proxy"]
+
+  require 'uri'
+  proxy_env = URI.parse(ENV["http_proxy"])
+
+  http_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
+  https_proxy "http://#{proxy_env.host}:#{proxy_env.port}"
+  no_proxy "192.168.*"
+end

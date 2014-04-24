@@ -4,9 +4,6 @@
     "recipe[simple_iptables]",
     "recipe[iptables_basic]",
 
-    "recipe[user_base]",
-    "recipe[user]",
-    "recipe[user::data_bag]",
     "recipe[desktop]",
 
     "recipe[arm-linux]",
@@ -14,10 +11,16 @@
     "recipe[sudo]",
     "recipe[openssh]",
     "recipe[vim]",
+
+    "recipe[user_base]",
+    "recipe[user::data_bag]",
     "recipe[base]"
   ],
 
   "_comment_users_setting" : [ "readme file : ./cookbooks/user/README.md" ],
+  "user" : {
+    "manage_group" : "manage"
+  },
   "users" : ["kitsunai"],
 
   "_comment_sudo_setting" : [ "readme file :  ./cookbooks/sudo/README.md"],
