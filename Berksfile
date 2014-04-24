@@ -6,7 +6,7 @@ site :opscode
 cookbook "openssh"
 
 #account setting
-cookbook "user"
+cookbook "user", git:"https://github.com/kagerouttepaso/chef-user"
 cookbook "sudo"
 
 #server setting
