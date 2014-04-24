@@ -46,12 +46,20 @@ if node['platform_version'].to_f >= 14.04  then
       :proxy => node[:base][:docker][:proxy], 
       :dns   => node[:base][:docker][:dns]
     })
-    notifies :restart, "service[docker.io]"
+    notifies :run, "execute[restart_docker.io]", :immediately
   end
 
   service "docker.io" do
     supports :status => true, :restart => true
     action [:enable]
+  end
+
+  execute "restart_docker.io" do
+    user    "root"
+    action  :nothing
+    command <<-EOH
+    service docker.io restart
+    EOH
   end
 
   simple_iptables_rule "shipyard" do
