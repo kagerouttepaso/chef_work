@@ -1,7 +1,0 @@
-set menu_color_normal=white/black
-set menu_color_highlight=black/light-gray
-
-menuentry "Netboot Ubuntu" {
-    linux  /image/ubuntu-13.10-desktop-amd64/casper/vmlinuz.efi boot=casper netboot=nfs root=/dev/nfs ro nfsroot=192.168.150.10:/var/lib/tftpboot/image/ubuntu-13.10-desktop-amd64 ip=dhcp
-    initrd /image/ubuntu-13.10-desktop-amd64/casper/initrd.lz
-}
