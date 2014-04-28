@@ -14,7 +14,7 @@ execute "register_sshkey" do
   user    node[:current_user]
   action  :run
   cwd     home_dir+"/.ssh/"
-   command "cat id_rsa.pub  >> authorized_keys"
+   command "cat id_dsa.pub  >> authorized_keys"
   environment(
     "HOME" => home_dir
   )
