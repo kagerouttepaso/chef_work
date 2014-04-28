@@ -1,4 +1,5 @@
 #!/bin/bash
+cd `dirname $0`
 RUBY_VERSION="`cat ./.ruby-version`"
 
 #install rbenv
