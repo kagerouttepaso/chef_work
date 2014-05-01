@@ -36,7 +36,7 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
         done
     fi
 else
-    echo http_proxy is ${http_proxy}
+    echo "http_proxy is ${http_proxy}"
     if [ -f ~/.gitconfig ] && [ "`cat ~/.gitconfig | grep -i proxy`" != "" ] ; then
         ;
     else
@@ -45,7 +45,7 @@ else
 fi
 
 if [ `cat /etc/lsb-release| grep RELEASE|sed -e "s/.*=\(.*\)/\1/"` = "14.04" ]; then
-    while [ "`sudo cat /etc/sudoers | grep env_keep | grep http_proxy`" = "" ] && [ ${http_proxy} != "" ] ; do
+    while [ "`sudo cat /etc/sudoers | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ; do
         echo "please write env_keep on /etc/sudoers"
         echo "i.e) Default env_keep=\"http_proxy\""
         echo "Please Enter run visudo"
