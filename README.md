@@ -3,6 +3,12 @@ chefの使い方
 
 **このRecipeはUbuntu 14.04でうまく動きます**
 
+## とりあえず簡単にインストールする
+
+``` sh
+curl -L https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | bash
+```
+
 ### 環境のインストール
 
 1. proxyの設定があるなら済ます
