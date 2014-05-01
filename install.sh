@@ -1,4 +1,4 @@
-et -e
+set -e
 
 echo install chefwork
 
