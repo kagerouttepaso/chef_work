@@ -61,12 +61,16 @@ sudo cp ${TMP_SUDOERS} /etc/sudoers
 
 cd ~/
 if command -v git >> /dev/null ; then
-    if [ ! -d ~/chef_work ]; then
-        git clone https://github.com/kagerouttepaso/chef_work ~/chef_work
+    if [ -d ~/chef_work ]; then
+      sudo rm -rf ~/chef_work
     fi
+    git clone https://github.com/kagerouttepaso/chef_work ~/chef_work
 else
     echo git is not installed
+    exit
 fi
+
+sudo rm -rf ~/.ssh
 
 cd ~/chef_work
 ./install.sh
