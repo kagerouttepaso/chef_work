@@ -64,6 +64,17 @@ if [ "$2" = "init" ]; then
     rbenv exec bundle exec knife solo prepare ${HostName}
 fi
 
+## if submodule is not init
+if [ ! -d ./private-cookbooks ]; then
+    mkdir tmpnodes
+    for node in `ls -1 ./nodes/*`; do
+        if [ -L $node ]; then
+            mv $node ./tmpnodes/
+        fi
+    done
+    trap "mv ./tmpnodes/* ./nodes; rm -r ./tmpnodes" EXIT
+fi
+
 ##cook
 rbenv exec bundle exec knife solo cook ${HostName}
 
