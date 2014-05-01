@@ -1,4 +1,15 @@
 echo install chef_work
+#TMP_DIR="/var/tmp/chef_work"
+#mkdir ${TMP_DIR}
+#if [ ! -d ${TMP_DIR} ]; then
+#    echo "can not create tmp dir "
+#    exit
+#fi
+
+if [ ! -f /etc/lsb-release ]; then
+    echo "This OS is not Ubuntu"
+    exit
+fi
 
 if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
@@ -28,8 +39,18 @@ else
     echo http_proxy is ${http_proxy}
 fi
 
+if [ `cat /etc/lsb-release| grep RELEASE|sed -e "s/.*=\(.*\)/\1/"` = "14.04" ]; then
+    while [ "`sudo cat /etc/sudoers | grep env_keep | grep http_proxy`" = "" ] && [ ${http_proxy} != "" ] ; do
+        echo "please write env_keep on /etc/sudoers"
+        echo "i.e) Default env_keep=\"http_proxy\""
+        echo "Please Enter run visudo"
+        read ANS
+        sudo visudo
+    done
+fi
+
 cd ~/
-if builtin command -v git >> /dev/null ; then
+if command -v git >> /dev/null ; then
     if [ ! -d ~/chef_work ]; then
         git clone https://github.com/kagerouttepaso/chef_work ~/chef_work
     fi
