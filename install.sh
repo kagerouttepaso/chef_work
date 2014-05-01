@@ -81,7 +81,6 @@ rbenv exec bundle exec knife solo cook ${HostName}
 if [ -f ./.tmpsshkeys/put ]; then
     echo rm tmp ssh keys
     rm ~/.ssh/id_rsa
-    rm ~/.ssh/authorized_keys
     rm ~/.ssh/id_rsa.pub
     rm ~/.ssh/known_hosts
     rm ~/.ssh/config
