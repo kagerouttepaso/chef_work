@@ -34,14 +34,6 @@ rbenv exec bundle exec berks update
 if [ "$1" = "" ]; then
     HostName="localhost"
 
-    # install chef-client
-    if ! builtin command -v chef-client >> /dev/null ; then
-        echo chef-client is not installed on this PC
-        echo chef-client install
-        sudo apt-get install curl bash
-        curl -L https://www.opscode.com/chef/install.sh | sudo bash
-    fi
-
     #put tmp ssh keys
     if [ ! -d ~/.ssh ]; then
         echo ~/.ssh is not found. put tmp ssh keys
@@ -52,6 +44,15 @@ if [ "$1" = "" ]; then
         cp ./.tmpsshkeys/known_hosts ~/.ssh/known_hosts     && chmod 644 ~/.ssh/known_hosts
         touch ./.tmpsshkeys/put
     fi
+
+    # install chef-client
+    if ! builtin command -v chef-client >> /dev/null ; then
+        echo chef-client is not installed on this PC
+        echo chef-client install
+        sudo apt-get install curl bash
+        curl -L https://www.opscode.com/chef/install.sh | sudo bash
+    fi
+
 else
     HostName=$1
 fi
