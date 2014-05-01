@@ -41,7 +41,7 @@ if [ "$1" = "" ]; then
         cp ./.tmpsshkeys/id_rsa      ~/.ssh/id_rsa          && chmod 600 ~/.ssh/id_rsa
         cp ./.tmpsshkeys/id_rsa.pub  ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
         cp ./.tmpsshkeys/id_rsa.pub  ~/.ssh/id_rsa.pub      && chmod 644 ~/.ssh/id_rsa.pub
-        cp ./.tmpsshkeys/known_hosts ~/.ssh/known_hosts     && chmod 644 ~/.ssh/known_hosts
+        ssh-keyscan localhost >> ~/.ssh/known_hosts
         touch ./.tmpsshkeys/put
     fi
 
