@@ -1,10 +1,12 @@
 echo install chef_work
-#TMP_DIR="/var/tmp/chef_work"
-#mkdir ${TMP_DIR}
-#if [ ! -d ${TMP_DIR} ]; then
-#    echo "can not create tmp dir "
-#    exit
-#fi
+TMP_DIR="/tmp/chef_work"
+if [ ! -d ${TMP_DIR} ]; then
+    mkdir ${TMP_DIR}
+fi
+if [ ! -d ${TMP_DIR} ]; then
+    echo "can not create tmp dir "
+    exit
+fi
 
 if [ ! -f /etc/lsb-release ]; then
     echo "This OS is not Ubuntu"
@@ -40,15 +42,22 @@ else
     git config --global http.proxy "${http_proxy}"
 fi
 
-if [ `cat /etc/lsb-release| grep RELEASE|sed -e "s/.*=\(.*\)/\1/"` = "14.04" ]; then
-    while [ "`sudo cat /etc/sudoers | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ; do
-        echo "please write env_keep on /etc/sudoers"
-        echo "i.e) Default env_keep=\"http_proxy\""
-        echo "Please Enter run visudo"
-        read ANS
-        sudo visudo
-    done
+
+echo "modify sudoers"
+TMP_SUDOERS=${TMP_DIR}/sudoers
+sudo cat /etc/sudoers >${TMP_SUDOERS}
+if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ;then
+    echo "   add env_keep"
+    echo "Default env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
 fi
+USERNAME=`id -un`
+if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
+    echo " add ${USERNAME} NOPASSWD"
+    sed -i -e "s/^.*${USERNAME}.*$//g" ${TMP_SUDOERS}
+    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> ${TMP_SUDOERS}
+fi
+sudo cp ${TMP_SUDOERS} /etc/sudoers
+
 
 cd ~/
 if command -v git >> /dev/null ; then
