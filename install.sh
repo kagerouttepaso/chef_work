@@ -2,9 +2,14 @@ et -e
 
 echo install chefwork
 
-#cd ~/
-#git clone https://github.com/kagerouttepaso/dotfiles/ ~/dotfiles
-#cd ~/dotfiles
-#./install.sh
+cd ~/
+if builtin command -v git >> /dev/null ; then
+    git clone https://github.com/kagerouttepaso/chef_work ~/chef_work
+else
+    echo git is not installed
+fi
+
+cd ~/chef_work
+./install.sh
 
 echo install finished
