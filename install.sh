@@ -37,8 +37,8 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     fi
 else
     echo http_proxy is ${http_proxy}
-    if [ -f ~/.gitconfig ] && [ `cat ~/.gitconfig | grep -i proxy` != "" ] ; then
-        echo git proxy setting is enable
+    if [ -f ~/.gitconfig ] && [ "`cat ~/.gitconfig | grep -i proxy`" != "" ] ; then
+        ;
     else
         git config --global http.proxy "${PROXY}"
     fi
