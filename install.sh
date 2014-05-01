@@ -42,6 +42,7 @@ if [ "$1" = "" ]; then
         cp ./.tmpsshkeys/id_rsa.pub  ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
         cp ./.tmpsshkeys/id_rsa.pub  ~/.ssh/id_rsa.pub      && chmod 644 ~/.ssh/id_rsa.pub
         ssh-keyscan localhost >> ~/.ssh/known_hosts
+        echo "Host localhost\nStrictHostKeyChecking no" > ~/.ssh/config
         touch ./.tmpsshkeys/put
     fi
 
@@ -72,5 +73,6 @@ if [ -f ./.tmpsshkeys/put ]; then
     rm ~/.ssh/authorized_keys
     rm ~/.ssh/id_rsa.pub
     rm ~/.ssh/known_hosts
+    rm ~/.ssh/config
     rm ./.tmpsshkeys/put
 fi
