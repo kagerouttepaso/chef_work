@@ -1,0 +1,4 @@
+/cookbooks/
+/.bundle/
+/*.lock
+/private-cookbooks/
