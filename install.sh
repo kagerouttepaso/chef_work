@@ -17,7 +17,7 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
     ANS="n"
     echo -n "register proxy? [y/N] >"
-    read ANS
+    #read ANS
     if [ "${ANS}" = "y" ] || [ "${ANS}" = "Y" ] ; then
         while :
         do
