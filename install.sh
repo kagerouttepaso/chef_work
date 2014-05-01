@@ -65,7 +65,7 @@ if [ "$2" = "init" ]; then
 fi
 
 ## if submodule is not init
-if [ ! -d ./private-cookbooks ]; then
+if [ ! -d ./private-cookbooks/nodes ]; then
     mkdir tmpnodes
     for node in `ls -1 ./nodes/*`; do
         if [ -L $node ]; then
