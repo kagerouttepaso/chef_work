@@ -11,12 +11,6 @@ fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-#Set up Hostname
-if [ "$1" = "" ]; then
-    HostName="localhost"
-else
-    HostName=$1
-fi
 
 #install ruby and bundle
 if [ "`rbenv versions | grep ${RUBY_VERSION}`" = "" ]; then
@@ -36,6 +30,32 @@ rbenv exec bundle install --path=.bundle
 rbenv exec bundle exec berks vendor ./cookbooks
 rbenv exec bundle exec berks update
 
+#Set up Hostname
+if [ "$1" = "" ]; then
+    HostName="localhost"
+
+    # install chef-client
+    if ! builtin command -v chef-client >> /dev/null ; then
+        echo chef-client is not installed on this PC
+        echo chef-client install
+        sudo apt-get install curl bash
+        curl -L https://www.opscode.com/chef/install.sh | sudo bash
+    fi
+
+    #put tmp ssh keys
+    if [ ! -d ~/.ssh ]; then
+        echo ~/.ssh is not found. put tmp ssh keys
+        mkdir ~/.ssh && chmod 700 ~/.ssh
+        cp ./.tmpsshkeys/id_rsa      ~/.ssh/id_rsa          && chmod 600 ~/.ssh/id_rsa
+        cp ./.tmpsshkeys/id_rsa.pub  ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+        cp ./.tmpsshkeys/id_rsa.pub  ~/.ssh/id_rsa.pub      && chmod 644 ~/.ssh/id_rsa.pub
+        cp ./.tmpsshkeys/known_hosts ~/.ssh/known_hosts     && chmod 644 ~/.ssh/known_hosts
+        touch ./.tmpsshkeys/put
+    fi
+else
+    HostName=$1
+fi
+
 #install chef
 if [ "$2" = "init" ]; then
     echo "install chef ${HostName}"
@@ -44,3 +64,12 @@ fi
 
 ##cook
 rbenv exec bundle exec knife solo cook ${HostName}
+
+if [ -f ./.tmpsshkeys/put ]; then
+    echo rm tmp ssh keys
+    rm ~/.ssh/id_rsa
+    rm ~/.ssh/authorized_keys
+    rm ~/.ssh/id_rsa.pub
+    rm ~/.ssh/known_hosts
+    rm ./.tmpsshkeys/put
+fi
