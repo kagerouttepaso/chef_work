@@ -58,7 +58,6 @@ if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
 fi
 sudo cp ${TMP_SUDOERS} /etc/sudoers
 
-sudo apt-get update
 
 cd ~/
 if command -v git >> /dev/null ; then
