@@ -48,7 +48,7 @@ TMP_SUDOERS=${TMP_DIR}/sudoers
 sudo cat /etc/sudoers >${TMP_SUDOERS}
 if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ;then
     echo "   add env_keep"
-    echo "Default env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
+    echo "Defaults env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
 fi
 USERNAME=`id -un`
 if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
