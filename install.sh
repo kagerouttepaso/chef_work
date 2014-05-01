@@ -37,6 +37,11 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     fi
 else
     echo http_proxy is ${http_proxy}
+    if [ -f ~/.gitconfig ] && [ `cat ~/.gitconfig | grep -i proxy` != "" ]; then
+        ;
+    else
+        git config --global http.proxy "${PROXY}"
+    fi
 fi
 
 if [ `cat /etc/lsb-release| grep RELEASE|sed -e "s/.*=\(.*\)/\1/"` = "14.04" ]; then
