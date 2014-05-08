@@ -31,13 +31,51 @@ simple_iptables_rule "mosh" do
 end
 
 if node['platform_version'].to_f >= 14.04  then
-  %w{docker.io}.each do |pkg|
-    package pkg do
-      action :upgrade
-    end
+  #  %w{docker.io}.each do |pkg|
+  #    package pkg do
+  #      action :upgrade
+  #    end
+  #  end
+  #
+  #  template "/etc/default/docker.io" do
+  #    source "docker.io.erb"
+  #    mode "644"
+  #    owner "root"
+  #    group "root"
+  #    variables({
+  #      :proxy => node[:base][:docker][:proxy], 
+  #      :dns   => node[:base][:docker][:dns]
+  #    })
+  #    notifies :run, "execute[restart_docker.io]", :immediately
+  #  end
+  #
+  #  service "docker.io" do
+  #    supports :status => true, :restart => true
+  #    action [:enable]
+  #  end
+  #
+  #  execute "restart_docker.io" do
+  #    user    "root"
+  #    action  :nothing
+  #    command <<-EOH
+  #    service docker.io restart
+  #    EOH
+  #  end
+
+  package "linux-image-extra-#{`uname -r`.strip}" do
+    action :upgrade
+  end
+  apt_repository "docker" do
+    uri "https://get.docker.io/ubuntu docker"
+    components ["main"]
+    keyserver "keyserver.ubuntu.com:80"
+    key "36A1D7869245C8950F966E92D8576A8BA88D21E9"
+  end
+  package "lxc-docker" do
+    action :upgrade
   end
 
-  template "/etc/default/docker.io" do
+  template "/etc/default/docker" do
     source "docker.io.erb"
     mode "644"
     owner "root"
@@ -46,19 +84,19 @@ if node['platform_version'].to_f >= 14.04  then
       :proxy => node[:base][:docker][:proxy], 
       :dns   => node[:base][:docker][:dns]
     })
-    notifies :run, "execute[restart_docker.io]", :immediately
+    notifies :run, "execute[restart_docker]", :immediately
   end
 
-  service "docker.io" do
+  service "docker" do
     supports :status => true, :restart => true
     action [:enable]
   end
 
-  execute "restart_docker.io" do
+  execute "restart_docker" do
     user    "root"
     action  :nothing
     command <<-EOH
-    service docker.io restart
+    service docker restart
     EOH
   end
 
