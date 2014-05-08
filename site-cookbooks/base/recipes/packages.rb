@@ -61,6 +61,12 @@ if node['platform_version'].to_f >= 14.04  then
   #    service docker.io restart
   #    EOH
   #  end
+  
+  %w{docker.io}.each do |pkg|
+    package pkg do
+      action :purge
+    end
+  end
 
   package "linux-image-extra-#{`uname -r`.strip}" do
     action :upgrade
