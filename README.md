@@ -6,7 +6,7 @@ chefの使い方
 ## とりあえず簡単にインストールする
 
 ``` sh
-curl -L https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | bash
+curl -L https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | sh
 ```
 
 ### 環境のインストール
