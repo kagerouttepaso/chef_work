@@ -35,14 +35,17 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
     ANS="n"
     echo -n "register proxy? [y/N] >"
-    read ANS < /dev/tty
+    exec 0</dev/tty               
+    read ANS
     if [ "${ANS}" = "y" ] || [ "${ANS}" = "Y" ] ; then
         while :
         do
             echo -n "write proxy address i.e. http://proxy.com:port \n >"
-            read PROXY < /dev/tty
+            exec 0</dev/tty               
+            read PROXY
             echo -n "http_proxy is ${PROXY} \ncan you register? [y/n] >"
-            read ANS < /dev/tty
+            exec 0</dev/tty               
+            read ANS
             if [ "${ANS}" = "y" ] || [ "${ANS}" = "Y" ] ; then
                 echo "export proxy"
                 export http_proxy="${PROXY}"
