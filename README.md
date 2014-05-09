@@ -4,9 +4,12 @@ chefの使い方
 **このRecipeはUbuntu 14.04でうまく動きます**
 
 ## とりあえず簡単にインストールする
+`curl` が使えるならこのコマンドを入れるだけで動く、プロキシの設定、sudoerの編集、必要なアプリのインストールは自動で行う
 
-``` sh
-curl -L https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | sh
+``` bash
+curl -Ls  https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | sh
+#when use proxy
+curl -Ls -x http://proxy.server:port https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | sh
 ```
 
 ### 環境のインストール
