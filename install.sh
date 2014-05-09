@@ -1,6 +1,12 @@
 set -e
+if [ ! -f /etc/lsb-release ]; then
+    echo "This OS is not Ubuntu"
+    exit
+fi
 
 echo install chef_work
+
+echo create tmp_dir
 TMP_DIR="/tmp/chef_work"
 if [ ! -d ${TMP_DIR} ]; then
     mkdir ${TMP_DIR}
@@ -10,19 +16,20 @@ if [ ! -d ${TMP_DIR} ]; then
     exit
 fi
 
-if [ ! -f /etc/lsb-release ]; then
-    echo "This OS is not Ubuntu"
-    exit
+echo "modify sudoers"
+TMP_SUDOERS=${TMP_DIR}/sudoers
+sudo cat /etc/sudoers >${TMP_SUDOERS}
+if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ;then
+    echo "   add env_keep"
+    echo "Defaults env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
 fi
-
-cd ~/
-
-if command -v git >> /dev/null ; then
-    echo git is installed
-else
-    echo git is not installed
-    sudo apt-get install -y -q git
-fi 
+USERNAME=`id -un`
+if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
+    echo " add ${USERNAME} NOPASSWD"
+    sed -i -e "s/^.*${USERNAME}.*$//g" ${TMP_SUDOERS}
+    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> ${TMP_SUDOERS}
+fi
+sudo cp ${TMP_SUDOERS} /etc/sudoers
 
 if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
@@ -50,25 +57,27 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     fi
 else
     echo "http_proxy is ${http_proxy}"
+fi
+
+if command -v git >> /dev/null ; then
+    echo git is installed
+else
+    echo git is not installed
+    sudo apt-get install -y -q git
+fi 
+if [ "`printenv | grep -i 'http_proxy'`" != "" ]; then
     git config --global http.proxy "${http_proxy}"
 fi
 
+if command -v sshd >> /dev/null ; then
+    echo ssh-server is installed
+else
+    echo ssh-server is not installed
+    sudo apt-get install -y -q opwnssh-server
+fi 
 
-echo "modify sudoers"
-TMP_SUDOERS=${TMP_DIR}/sudoers
-sudo cat /etc/sudoers >${TMP_SUDOERS}
-if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ;then
-    echo "   add env_keep"
-    echo "Defaults env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
-fi
-USERNAME=`id -un`
-if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
-    echo " add ${USERNAME} NOPASSWD"
-    sed -i -e "s/^.*${USERNAME}.*$//g" ${TMP_SUDOERS}
-    echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> ${TMP_SUDOERS}
-fi
-sudo cp ${TMP_SUDOERS} /etc/sudoers
 
+cd ~/
 
 if [ -d ~/chef_work ]; then
   sudo rm -rf ~/chef_work
