@@ -13,6 +13,15 @@ if [ ! -f /etc/lsb-release ]; then
     exit
 fi
 
+cd ~/
+
+if command -v git >> /dev/null ; then
+    echo git is installed
+else
+    echo git is not installed
+    sudo apt-get install git -y
+fi
+
 if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
     ANS="n"
@@ -59,16 +68,10 @@ fi
 sudo cp ${TMP_SUDOERS} /etc/sudoers
 
 
-cd ~/
-if command -v git >> /dev/null ; then
-    if [ -d ~/chef_work ]; then
-      sudo rm -rf ~/chef_work
-    fi
-    git clone https://github.com/kagerouttepaso/chef_work ~/chef_work
-else
-    echo git is not installed
-    exit
+if [ -d ~/chef_work ]; then
+  sudo rm -rf ~/chef_work
 fi
+git clone https://github.com/kagerouttepaso/chef_work ~/chef_work
 
 sudo rm -rf ~/.ssh
 
