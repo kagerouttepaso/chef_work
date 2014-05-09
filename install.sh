@@ -21,8 +21,8 @@ if command -v git >> /dev/null ; then
     echo git is installed
 else
     echo git is not installed
-    (set -x; sudo apt-get install -y -q git )
-fi
+    (set -x; sh -c "sudo apt-get install -y -q git" )
+fi 
 
 if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
