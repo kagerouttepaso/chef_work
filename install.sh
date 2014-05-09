@@ -19,15 +19,16 @@ fi
 echo "modify sudoers"
 TMP_SUDOERS=${TMP_DIR}/sudoers
 sudo cat /etc/sudoers >${TMP_SUDOERS}
-if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep http_proxy`" = "" ] && [ "${http_proxy}" != "" ] ;then
-    echo "   add env_keep"
-    echo "Defaults env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
-fi
 USERNAME=`id -un`
 if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
     echo " add ${USERNAME} NOPASSWD"
     sed -i -e "s/^.*${USERNAME}.*$//g" ${TMP_SUDOERS}
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> ${TMP_SUDOERS}
+fi
+if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep NOPASSWD `" = "" ];then
+    echo " add ${USERNAME} NOPASSWD"
+    sed -i -e "s/^.*env_keep*$//g" ${TMP_SUDOERS}
+    echo "Defaults env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
 fi
 sudo cp ${TMP_SUDOERS} /etc/sudoers
 
@@ -51,7 +52,6 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
                 export http_proxy="${PROXY}"
                 export https_proxy="${PROXY}"
                 export ftp_proxy="${PROXY}"
-                echo "[http]\n proxy = ${PROXY}" >> ~/.gitconfig
                 break
             elif [ "${ANS}" = "n" ] || [ "${ANS}" = "N" ] ; then
                 break
@@ -60,6 +60,22 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     fi
 else
     echo "http_proxy is ${http_proxy}"
+fi
+
+if [ "`printenv | grep -i 'http_proxy'`" != "" ]; then
+    echo "modify environment"
+    TMP_ENVIRONMENT=${TMP_DIR}/environment
+    sudo cat /etc/environment >${TMP_ENVIRONMENT}
+    sed -i -e "s/^.*http_proxy.*$//g" ${TMP_ENVIRONMENT}
+    sed -i -e "s/^.*https_proxy.*$//g" ${TMP_ENVIRONMENT}
+    sed -i -e "s/^.*ftp_proxy.*$//g" ${TMP_ENVIRONMENT}
+    sed -i -e "s/^.*HTTP_PROXY.*$//g" ${TMP_ENVIRONMENT}
+    sed -i -e "s/^.*HTTPS_PROXY.*$//g" ${TMP_ENVIRONMENT}
+    sed -i -e "s/^.*FTP_PROXY.*$//g" ${TMP_ENVIRONMENT}
+    echo "http_proxy=\"${http_proxy}\"" >> ${TMP_ENVIRONMENT}
+    echo "https_proxy=\"${http_proxy}\"" >> ${TMP_ENVIRONMENT}
+    echo "ftp_proxy=\"${http_proxy}\"" >> ${TMP_ENVIRONMENT}
+    sudo cp ${TMP_ENVIRONMENT} /etc/environment
 fi
 
 if command -v git >> /dev/null ; then
