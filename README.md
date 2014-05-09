@@ -4,8 +4,8 @@ chef_work
 install command
 ----
 
-``` sh
+``` bash
 curl -Ls  https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | sh
-or
+#when use proxy
 curl -Ls -x http://proxy.server:port https://raw.github.com/kagerouttepaso/chef_work/curl/install.sh | sh
 ```
