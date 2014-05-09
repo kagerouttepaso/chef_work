@@ -71,12 +71,23 @@ if node['platform_version'].to_f >= 14.04  then
   package "linux-image-extra-#{`uname -r`.strip}" do
     action :upgrade
   end
-  apt_repository "docker" do
-    uri "https://get.docker.io/ubuntu docker"
-    components ["main"]
-    keyserver "keyserver.ubuntu.com:80"
-    key "36A1D7869245C8950F966E92D8576A8BA88D21E9"
+
+  #apt_repository "docker" do
+  #  uri "https://get.docker.io/ubuntu docker"
+  #  components ["main"]
+  #  keyserver "https://keyserver.ubuntu.com"
+  #  key "36A1D7869245C8950F966E92D8576A8BA88D21E9"
+  #end
+  
+  execute "install docker" do
+    user    "root"
+    action  :run
+    command <<-EOH
+    curl -L https://get.docker.io/ubuntu | bash
+    EOH
+    creates "/etc/default/docker"
   end
+
   package "lxc-docker" do
     action :upgrade
   end
