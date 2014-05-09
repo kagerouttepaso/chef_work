@@ -83,7 +83,7 @@ echo "3.install packages"
 if command -v git >> /dev/null ; then
     echo "    git is installed"
 else
-    echo "    git is not installed"
+    echo "    git is not installed. install now"
     sudo apt-get install -y -q git >/dev/null
 fi 
 if [ "`printenv | grep -i 'http_proxy'`" != "" ]; then
@@ -93,7 +93,7 @@ fi
 if command -v sshd >> /dev/null ; then
     echo "    ssh-server is installed"
 else
-    echo "    ssh-server is not installed"
+    echo "    ssh-server is not installed. install now"
     sudo apt-get install -y -q openssh-server >/dev/null
 fi 
 
