@@ -4,47 +4,48 @@ if [ ! -f /etc/lsb-release ]; then
     exit
 fi
 
-echo install chef_work
+echo "install chef_work"
 
-echo create tmp_dir
+echo "create tmp_dir"
 TMP_DIR="/tmp/chef_work"
 if [ ! -d ${TMP_DIR} ]; then
     mkdir ${TMP_DIR}
 fi
 if [ ! -d ${TMP_DIR} ]; then
-    echo "can not create tmp dir "
+    echo "    can not create tmp dir "
     exit
 fi
 
-echo "modify sudoers"
+echo "1.modify sudoers"
 TMP_SUDOERS=${TMP_DIR}/sudoers
 sudo cat /etc/sudoers >${TMP_SUDOERS}
 USERNAME=`id -un`
 if [ "`cat ${TMP_SUDOERS} | grep ${USERNAME} | grep NOPASSWD `" = "" ];then
-    echo " add ${USERNAME} NOPASSWD"
+    echo "    add ${USERNAME} NOPASSWD"
     sed -i -e "s/^.*${USERNAME}.*$//g" ${TMP_SUDOERS}
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> ${TMP_SUDOERS}
 fi
 if [ "`cat ${TMP_SUDOERS} | grep env_keep | grep NOPASSWD `" = "" ];then
-    echo " add ${USERNAME} NOPASSWD"
+    echo "    add env_proxy"
     sed -i -e "s/^.*env_keep*$//g" ${TMP_SUDOERS}
     echo "Defaults env_keep=\"http_proxy https_proxy ftp_proxy\"" >> ${TMP_SUDOERS}
 fi
 sudo cp ${TMP_SUDOERS} /etc/sudoers
 
+echo "2.proxy setting"
 if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
     #register proxy
     ANS="n"
-    echo -n "register proxy? [y/N] >"
+    echo -n "    register proxy? [y/N] >"
     exec 0</dev/tty               
     read ANS
     if [ "${ANS}" = "y" ] || [ "${ANS}" = "Y" ] ; then
         while :
         do
-            echo -n "write proxy address i.e. http://proxy.com:port \n >"
+            echo -n "    write proxy address i.e. http://proxy.com:port \n    >"
             exec 0</dev/tty               
             read PROXY
-            echo -n "http_proxy is ${PROXY} \ncan you register? [y/n] >"
+            echo -n "    http_proxy is ${PROXY} \n    can you register? [y/n] >"
             exec 0</dev/tty               
             read ANS
             if [ "${ANS}" = "y" ] || [ "${ANS}" = "Y" ] ; then
@@ -59,11 +60,11 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
         done
     fi
 else
-    echo "http_proxy is ${http_proxy}"
+    echo "    http_proxy is ${http_proxy}"
 fi
 
 if [ "`printenv | grep -i 'http_proxy'`" != "" ]; then
-    echo "modify environment"
+    echo "    modify /etc/environment"
     TMP_ENVIRONMENT=${TMP_DIR}/environment
     sudo cat /etc/environment >${TMP_ENVIRONMENT}
     sed -i -e "s/^.*http_proxy.*$//g" ${TMP_ENVIRONMENT}
@@ -78,25 +79,24 @@ if [ "`printenv | grep -i 'http_proxy'`" != "" ]; then
     sudo cp ${TMP_ENVIRONMENT} /etc/environment
 fi
 
+echo "3.install packages"
 if command -v git >> /dev/null ; then
-    echo git is installed
+    echo "    git is installed"
 else
-    echo git is not installed
-    sudo apt-get install -y -q git
+    echo "    git is not installed"
+    sudo apt-get install -y -q git >/dev/null
 fi 
 if [ "`printenv | grep -i 'http_proxy'`" != "" ]; then
     git config --global http.proxy "${http_proxy}"
 fi
 
 if command -v sshd >> /dev/null ; then
-    echo ssh-server is installed
+    echo "    ssh-server is installed"
 else
-    echo ssh-server is not installed
-    sudo apt-get install -y -q opwnssh-server
+    echo "    ssh-server is not installed"
+    sudo apt-get install -y -q opwnssh-server >/dev/null
 fi 
 
-
-cd ~/
 
 if [ -d ~/chef_work ]; then
   sudo rm -rf ~/chef_work
