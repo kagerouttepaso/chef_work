@@ -21,7 +21,7 @@ if command -v git >> /dev/null ; then
     echo git is installed
 else
     echo git is not installed
-    sh -c sudo apt-get install git -y
+    (set -x; sudo apt-get install -y -q git )
 fi
 
 if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
