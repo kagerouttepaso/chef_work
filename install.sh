@@ -49,7 +49,7 @@ if [ "`printenv | grep -i 'http_proxy'`" = "" ]; then
             exec 0</dev/tty               
             read ANS
             if [ "${ANS}" = "y" ] || [ "${ANS}" = "Y" ] ; then
-                echo "export proxy"
+                echo "    export proxy"
                 export http_proxy="${PROXY}"
                 export https_proxy="${PROXY}"
                 export ftp_proxy="${PROXY}"
@@ -94,7 +94,7 @@ if command -v sshd >> /dev/null ; then
     echo "    ssh-server is installed"
 else
     echo "    ssh-server is not installed"
-    sudo apt-get install -y -q opwnssh-server >/dev/null
+    sudo apt-get install -y -q openssh-server >/dev/null
 fi 
 
 
