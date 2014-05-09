@@ -1,3 +1,5 @@
+set -e
+
 echo install chef_work
 TMP_DIR="/tmp/chef_work"
 if [ ! -d ${TMP_DIR} ]; then
