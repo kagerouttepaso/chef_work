@@ -7,6 +7,9 @@ sudo apt-get install -y openssh-server git zlib1g-dev libssl-dev g++ autoconf ma
 if [ ! -d ~/.rbenv ]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+else
+    sh -c "cd ~/.rbenv;                    git fetch; git rebase origin/master;"
+    sh -c "cd ~/.rbenv/plugins/ruby-build; git fetch; git rebase origin/master;"
 fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
