@@ -49,6 +49,7 @@
     },
     "server" : {
       "password_authentication"           : "yes",
+      "compression"                       : "delayed",
       "port"                              : "22",
       "protocol"                          : "2",
       "host_key"                          : ["/etc/ssh/ssh_host_rsa_key", "/etc/ssh/ssh_host_dsa_key", "/etc/ssh/ssh_host_ecdsa_key"],
