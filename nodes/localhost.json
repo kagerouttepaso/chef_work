@@ -6,8 +6,6 @@
 
     "recipe[desktop]",
 
-    "recipe[arm-linux]",
-
     "recipe[sudo]",
     "recipe[openssh]",
     "recipe[vim]",
