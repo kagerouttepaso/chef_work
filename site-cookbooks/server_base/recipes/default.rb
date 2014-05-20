@@ -9,7 +9,7 @@
 
 include_recipe "server_base::logwatch"
 include_recipe "server_base::ntp"
-include_recipe "server_base::nginx_start_page"
+#include_recipe "server_base::nginx_start_page"
 
   simple_iptables_rule "gitlab" do
     rule [ "--proto tcp --dport 3000" ]
