@@ -30,6 +30,7 @@ rbenv rehash
 
 # install pakagees of bundle and beaks
 rbenv exec bundle install --path=.bundle
+rbenv exec bundle update
 rbenv exec bundle exec berks vendor ./cookbooks
 rbenv exec bundle exec berks update
 
