@@ -61,76 +61,76 @@ if node['platform_version'].to_f >= 14.04  then
   #    service docker.io restart
   #    EOH
   #  end
-  
-  %w{docker.io}.each do |pkg|
-    package pkg do
-      action :purge
-    end
-  end
-
-  package "linux-image-extra-#{`uname -r`.strip}" do
-    action :upgrade
-  end
-
-  #apt_repository "docker" do
-  #  uri "https://get.docker.io/ubuntu docker"
-  #  components ["main"]
-  #  keyserver "https://keyserver.ubuntu.com"
-  #  key "36A1D7869245C8950F966E92D8576A8BA88D21E9"
-  #end
-  
-  execute "install docker" do
-    user    "root"
-    action  :run
-    command <<-EOH
-    curl -L https://get.docker.io/ubuntu | bash
-    EOH
-    creates "/etc/default/docker"
-  end
-
-  package "lxc-docker" do
-    action :upgrade
-  end
-
-  template "/etc/default/docker" do
-    source "docker.io.erb"
-    mode "644"
-    owner "root"
-    group "root"
-    variables({
-      :proxy => node[:base][:docker][:proxy], 
-      :dns   => node[:base][:docker][:dns]
-    })
-    notifies :run, "execute[restart_docker]", :immediately
-  end
-
-  service "docker" do
-    supports :status => true, :restart => true
-    action [:enable]
-  end
-
-  execute "restart_docker" do
-    user    "root"
-    action  :nothing
-    command <<-EOH
-    service docker restart
-    EOH
-  end
-
-  simple_iptables_rule "shipyard" do
-    rule "--proto tcp --dport 8000"
-    jump "ACCEPT"
-  end
-
-  home_dir="/home/"+node[:current_user]
-  execute "run docker ui" do
-    user    "root"
-    action  :nothing
-    command <<-EOH
-    docker.io run -i -t -v /var/run/docker.sock:/docker.sock shipyard/deploy setup
-    curl https://github.com/shipyard/shipyard-agent/releases/download/v0.3.1/shipyard-agent -L -o /usr/local/bin/shipyard-agent
-    chmod +x /usr/local/bin/shipyard-agent
-    shipyard-agent -url http://172.16.6.10:8000 -register
-    EOH
-  end
+#  
+#  %w{docker.io}.each do |pkg|
+#    package pkg do
+#      action :purge
+#    end
+#  end
+#
+#  package "linux-image-extra-#{`uname -r`.strip}" do
+#    action :upgrade
+#  end
+#
+#  #apt_repository "docker" do
+#  #  uri "https://get.docker.io/ubuntu docker"
+#  #  components ["main"]
+#  #  keyserver "https://keyserver.ubuntu.com"
+#  #  key "36A1D7869245C8950F966E92D8576A8BA88D21E9"
+#  #end
+#  
+#  execute "install docker" do
+#    user    "root"
+#    action  :run
+#    command <<-EOH
+#    curl -L https://get.docker.io/ubuntu | bash
+#    EOH
+#    creates "/etc/default/docker"
+#  end
+#
+#  package "lxc-docker" do
+#    action :upgrade
+#  end
+#
+#  template "/etc/default/docker" do
+#    source "docker.io.erb"
+#    mode "644"
+#    owner "root"
+#    group "root"
+#    variables({
+#      :proxy => node[:base][:docker][:proxy], 
+#      :dns   => node[:base][:docker][:dns]
+#    })
+#    notifies :run, "execute[restart_docker]", :immediately
+#  end
+#
+#  service "docker" do
+#    supports :status => true, :restart => true
+#    action [:enable]
+#  end
+#
+#  execute "restart_docker" do
+#    user    "root"
+#    action  :nothing
+#    command <<-EOH
+#    service docker restart
+#    EOH
+#  end
+#
+#  simple_iptables_rule "shipyard" do
+#    rule "--proto tcp --dport 8000"
+#    jump "ACCEPT"
+#  end
+#
+#  home_dir="/home/"+node[:current_user]
+#  execute "run docker ui" do
+#    user    "root"
+#    action  :nothing
+#    command <<-EOH
+#    docker.io run -i -t -v /var/run/docker.sock:/docker.sock shipyard/deploy setup
+#    curl https://github.com/shipyard/shipyard-agent/releases/download/v0.3.1/shipyard-agent -L -o /usr/local/bin/shipyard-agent
+#    chmod +x /usr/local/bin/shipyard-agent
+#    shipyard-agent -url http://172.16.6.10:8000 -register
+#    EOH
+#  end
 end

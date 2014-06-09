@@ -3,7 +3,15 @@ cd `dirname $0`
 RUBY_VERSION="`cat ./.ruby-version`"
 
 #install rbenv
-sudo apt-get install -y openssh-server git zlib1g-dev libssl-dev g++ autoconf make gcc
+sudo apt-get install -y \
+    openssh-server \
+    git \
+    zlib1g-dev \
+    libssl-dev \
+    g++ \
+    autoconf \
+    make \
+    gcc
 if [ ! -d ~/.rbenv ]; then
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build

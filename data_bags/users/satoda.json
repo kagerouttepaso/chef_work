@@ -6,7 +6,7 @@
   "shell"        : "/bin/bash",
   "ssh_keygen"   : "true",
 
-  "groups"        : ["docker", "vboxsf", "www-data"],
+  "groups"        : ["vboxsf", "www-data"],
 
   "password"   : "$6$forjapan$CrEw3YL2F/i4wGFLc2bHgwcoRjBnO1TwvRcKZZ4MWGxwk8jJgXaR0N6FsVoOOpqzABYhZ5MQP202rLV9BkCr9.",
 
