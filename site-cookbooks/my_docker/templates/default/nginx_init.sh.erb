@@ -1,8 +1,13 @@
 #!/bin/bash
+echo GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT="${GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}"
+echo GITLAB_PORT_80_TCP_ADDR="${GITLAB_PORT_80_TCP_ADDR}"
+if [ -f /etc/nginx/sites-enabled/default ] ; then
+    rm /etc/nginx/sites-enabled/default
+fi
 
 cd /data
 cp ./nginx_default tmp_default
-sed -i -e 's/{{GITLAB_PORT_80_TCP_ADDR}}/'"${GITLAB_PORT_80_TCP_ADDR}"'/g'                         ./tmp_default
-sed -i -e 's/{{GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}}/'"${GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}"'/g' ./tmp_default
-mv ./tmp_default /etc/nginx/sites-enabledo
+sed 's/{{GITLAB_PORT_80_TCP_ADDR}}/'"${GITLAB_PORT_80_TCP_ADDR}"'/g'                         -i ./tmp_default
+sed 's,{{GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}},'"${GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}"',g' -i ./tmp_default
+mv ./tmp_default /etc/nginx/sites-enabled/default
 nginx

@@ -17,15 +17,34 @@ directory dockerfiles_Dir do
   action :create
 end
 
-#gitlab
 gitlab_service_name = "gitlab";
-gitlab_dir          = dockerfiles_Dir + "/" + gitlab_service_name
+nginx_service_name  = "nginx";
+services = [nginx_service_name, gitlab_service_name];
+
+services.each do |s|
+  docker_container s do
+    action :stop
+  end
+  docker_container s do
+    action :remove
+  end
+  execute "remove" + s do
+    command "rm /var/run/" + s + ".cid"
+  end
+
+end
+
+#gitlab
+gitlab_dir          = dockerfiles_Dir + "/" + gitlab_service_name;
 
 docker_container gitlab_service_name do
-  image          "sameersbn/gitlab:6.9.2"
+  image          "sameersbn/gitlab"
   detach         true
   container_name gitlab_service_name
-  port           "10022:22"
+  action         :run
+  port [
+    "10022:22",
+  ]
   env [
     "NGINX_MAX_UPLOAD_SIZE=512m",
     "GITLAB_HOST=" + hostname,
@@ -35,34 +54,30 @@ docker_container gitlab_service_name do
     "GITLAB_SSH_PORT=10022",
   ]
   volume [
-    gitlab_dir + "/" + "/data:/home/git/data",
-    gitlab_dir + "/" + "/mysql:/var/lib/mysql",
+    gitlab_dir + "/data:/home/git/data",
+    gitlab_dir + "/mysql:/var/lib/mysql",
   ]
-  action :run
 end
 
 
 #nginx
-nginx_service_name = "nginx";
 nginx_data_dir     = dockerfiles_Dir + "/" + nginx_service_name;
 
-%w{data}.each do |dir|
-  directory nginx_data_dir + "/" + dir do
-    owner  "root"
-    group  "docker"
-    mode   "755"
-    action :create
-  end
+directory nginx_data_dir + "/data" do
+  owner     "root"
+  group     "docker"
+  mode      "755"
+  recursive true
+  action    :create
 end
-
-template nginx_data_dir + "/data/" + "nginx_default" do
+template nginx_data_dir + "/data/nginx_default" do
   mode   "644"
   source "nginx_default.erb"
   variables ({
     :server_name => hostname,
   })
 end
-template nginx_data_dir + "/data/" + "init.sh" do
+template nginx_data_dir + "/data/init.sh" do
   mode   "755"
   source "nginx_init.sh.erb"
 end
@@ -71,13 +86,18 @@ docker_container nginx_service_name do
   image          "dockerfile/nginx"
   detach         true
   container_name nginx_service_name
-  port           "80:80"
+  command        "/data/init.sh"
+  action         :run
+  port [
+    "80:80",
+  ]
   volume [
     nginx_data_dir + "/sites-enabled:/etc/nginx/sites-enabled",
     nginx_data_dir + "/log:/var/log/nginx",
     nginx_data_dir + "/data:/data",
   ]
-  command "/data/init.sh"
-  action :run
+  link [
+    gitlab_service_name + ":" + gitlab_service_name,
+  ]
 end
 

@@ -43,7 +43,7 @@ server {
         rewrite ^(.*)$ $1/ permanent;
 	}
 	location {{GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}} {
-        proxy_pass http://{{GITLAB_PORT_80_TCP_ADDR=}};
+        proxy_pass http://{{GITLAB_PORT_80_TCP_ADDR}};
 	}
 
 	#error_page 404 /404.html;
