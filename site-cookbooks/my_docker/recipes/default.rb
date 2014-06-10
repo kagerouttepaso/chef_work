@@ -12,25 +12,20 @@ dockerfiles_Dir      = node[:my_docker][:data_dir];
 
 directory dockerfiles_Dir do
   owner  "root"
-  group  "root"
+  group  "docker"
   mode   "755"
   action :create
 end
 
 #gitlab
-%w{data mysql}.each do |dir|
-  directory dockerfiles_Dir + "/" + dir do
-    owner  "docker"
-    group  "root"
-    mode   "755"
-    action :create
-  end
-end
-docker_container "gitlab" do
-  image "sameersbn/gitlab:6.9.2"
-  detach   true
-  container_name "gitlab"
-  port     "10022:22"
+gitlab_service_name = "gitlab";
+gitlab_dir          = dockerfiles_Dir + "/" + gitlab_service_name
+
+docker_container gitlab_service_name do
+  image          "sameersbn/gitlab:6.9.2"
+  detach         true
+  container_name gitlab_service_name
+  port           "10022:22"
   env [
     "NGINX_MAX_UPLOAD_SIZE=512m",
     "GITLAB_HOST=" + hostname,
@@ -40,9 +35,49 @@ docker_container "gitlab" do
     "GITLAB_SSH_PORT=10022",
   ]
   volume [
-    dockerfiles_Dir + "/data:/home/git/data",
-    dockerfiles_Dir + "/mysql:/var/lib/mysql",
+    gitlab_dir + "/" + "/data:/home/git/data",
+    gitlab_dir + "/" + "/mysql:/var/lib/mysql",
   ]
+  action :run
+end
+
+
+#nginx
+nginx_service_name = "nginx";
+nginx_data_dir     = dockerfiles_Dir + "/" + nginx_service_name;
+
+%w{data}.each do |dir|
+  directory nginx_data_dir + "/" + dir do
+    owner  "root"
+    group  "docker"
+    mode   "755"
+    action :create
+  end
+end
+
+template nginx_data_dir + "/data/" + "nginx_default" do
+  mode   "644"
+  source "nginx_default.erb"
+  variables ({
+    :server_name => hostname,
+  })
+end
+template nginx_data_dir + "/data/" + "init.sh" do
+  mode   "755"
+  source "nginx_init.sh.erb"
+end
+
+docker_container nginx_service_name do
+  image          "dockerfile/nginx"
+  detach         true
+  container_name nginx_service_name
+  port           "80:80"
+  volume [
+    nginx_data_dir + "/sites-enabled:/etc/nginx/sites-enabled",
+    nginx_data_dir + "/log:/var/log/nginx",
+    nginx_data_dir + "/data:/data",
+  ]
+  command "/data/init.sh"
   action :run
 end
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd /data
+cp ./nginx_default tmp_default
+sed -i -e 's/{{GITLAB_PORT_80_TCP_ADDR}}/'"${GITLAB_PORT_80_TCP_ADDR}"'/g'                         ./tmp_default
+sed -i -e 's/{{GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}}/'"${GITLAB_ENV_GITLAB_RELATIVE_URL_ROOT}"'/g' ./tmp_default
+mv ./tmp_default /etc/nginx/sites-enabledo
+nginx
