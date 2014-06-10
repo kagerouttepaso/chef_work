@@ -29,13 +29,20 @@ services.each do |s|
     action :remove
   end
   execute "remove" + s do
-    command "rm /var/run/" + s + ".cid"
+    command "if [ -f /var/run/" + s + ".cid ]; then rm /var/run/" + s + ".cid; fi"
   end
 
 end
 
 #gitlab
 gitlab_dir          = dockerfiles_Dir + "/" + gitlab_service_name;
+
+simple_iptables_rule gitlab_service_name + "_iptable" do
+  rule [
+    "--proto tcp --dport 10022",
+  ]
+  jump "ACCEPT"
+end
 
 docker_container gitlab_service_name do
   image          "sameersbn/gitlab"
@@ -80,6 +87,13 @@ end
 template nginx_data_dir + "/data/init.sh" do
   mode   "755"
   source "nginx_init.sh.erb"
+end
+
+simple_iptables_rule nginx_service_name + "_iptable" do
+  rule [
+    "--proto tcp --dport 80",
+  ]
+  jump "ACCEPT"
 end
 
 docker_container nginx_service_name do
