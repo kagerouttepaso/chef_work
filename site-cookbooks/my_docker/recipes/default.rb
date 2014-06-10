@@ -49,6 +49,7 @@ docker_container gitlab_service_name do
   detach         true
   container_name gitlab_service_name
   action         :run
+  init_type      false
   port [
     "10022:22",
   ]
@@ -102,6 +103,7 @@ docker_container nginx_service_name do
   container_name nginx_service_name
   command        "/data/init.sh"
   action         :run
+  init_type      false
   port [
     "80:80",
   ]
