@@ -23,6 +23,6 @@ cookbook "php-fpm"
 #cookbook "gitlab", git: "https://gitlab.com/gitlab-org/cookbook-gitlab.git"
 
 #must study
-cookbook "application"
-cookbook "application_nginx"
+#cookbook "application"
+#cookbook "application_nginx"
 
